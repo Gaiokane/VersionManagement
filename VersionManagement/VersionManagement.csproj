@@ -36,6 +36,9 @@
     <ApplicationIcon>Resources\ahx5z-4c0qe-002.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Reference Include="Gaiokane">
+      <HintPath>lib\Gaiokane.dll</HintPath>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.Core" />
     <Reference Include="System.Xml.Linq" />
@@ -61,6 +64,10 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\ConfigHelper.cs" />
+    <Compile Include="Helper\DefaultConfig.cs" />
+    <Compile Include="Helper\RichTextBoxMenu.cs" />
+    <Compile Include="Helper\VersionConfig.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="UCDatabaseConfiguration.cs">

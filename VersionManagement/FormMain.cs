@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using VersionManagement.Helper;
 
 namespace VersionManagement
 {
@@ -22,11 +24,29 @@ namespace VersionManagement
             //加载默认图标
             this.Icon = Properties.Resources.ahx5z_4c0qe_002;
 
+            //默认配置文件初始化
+            DefaultConfig.Init();
+            //默认配置文件读取配置
+            DefaultConfigFill();
+
+            //版本配置文件对应文件的初始化
+            string rootPath = Environment.CurrentDirectory;
+            //创建对应文件
+            FileStream versionfile = File.Create(rootPath + "\\Version");
+            versionfile.Close();
+            //版本配置文件初始化
+            VersionConfig.Init();
+
             //初始化加载用户控件
             panel1.Controls.Clear();
             //UCTest uc = new UCTest();
             UCVersionInformation uc = new UCVersionInformation();
             panel1.Controls.Add(uc);
+        }
+
+        private void DefaultConfigFill()
+        {
+            //this.Text = DefaultConfig.DefaultFormText;
         }
 
         private void 版本信息ToolStripMenuItem_Click(object sender, EventArgs e)
