@@ -75,7 +75,7 @@ namespace VersionManagement.Helper
             }
             if (string.IsNullOrEmpty(Version_V5_0_0))
             {
-                ConfigHelper.AddappSettings("Version_V5.0.0", @"V5.0.0初始版本;2021-07-31;1;", CONFIGPATH);
+                ConfigHelper.AddappSettings("Version_V5.0.0", @"V5.0.0初始版本;2021-07-31;", CONFIGPATH);
             }
             if (string.IsNullOrEmpty(System))
             {

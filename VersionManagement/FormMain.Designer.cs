@@ -83,28 +83,28 @@ namespace VersionManagement
             // 版本配置ToolStripMenuItem
             // 
             this.版本配置ToolStripMenuItem.Name = "版本配置ToolStripMenuItem";
-            this.版本配置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.版本配置ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.版本配置ToolStripMenuItem.Text = "版本配置";
             this.版本配置ToolStripMenuItem.Click += new System.EventHandler(this.版本配置ToolStripMenuItem_Click);
             // 
             // 数据库配置ToolStripMenuItem
             // 
             this.数据库配置ToolStripMenuItem.Name = "数据库配置ToolStripMenuItem";
-            this.数据库配置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.数据库配置ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.数据库配置ToolStripMenuItem.Text = "数据库配置";
             this.数据库配置ToolStripMenuItem.Click += new System.EventHandler(this.数据库配置ToolStripMenuItem_Click);
             // 
             // 系统配置ToolStripMenuItem
             // 
             this.系统配置ToolStripMenuItem.Name = "系统配置ToolStripMenuItem";
-            this.系统配置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.系统配置ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.系统配置ToolStripMenuItem.Text = "系统配置";
             this.系统配置ToolStripMenuItem.Click += new System.EventHandler(this.系统配置ToolStripMenuItem_Click);
             // 
             // 类型配置ToolStripMenuItem
             // 
             this.类型配置ToolStripMenuItem.Name = "类型配置ToolStripMenuItem";
-            this.类型配置ToolStripMenuItem.Size = new System.Drawing.Size(180, 22);
+            this.类型配置ToolStripMenuItem.Size = new System.Drawing.Size(136, 22);
             this.类型配置ToolStripMenuItem.Text = "类型配置";
             this.类型配置ToolStripMenuItem.Click += new System.EventHandler(this.类型配置ToolStripMenuItem_Click);
             // 
