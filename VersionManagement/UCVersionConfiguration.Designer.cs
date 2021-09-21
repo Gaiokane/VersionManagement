@@ -33,6 +33,9 @@ namespace VersionManagement
             this.BtnEdit = new System.Windows.Forms.Button();
             this.BtnDelete = new System.Windows.Forms.Button();
             this.DGV = new System.Windows.Forms.DataGridView();
+            this.VersionNumber = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.VersionDescription = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.ReleaseDate = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
             this.SuspendLayout();
             // 
@@ -65,12 +68,45 @@ namespace VersionManagement
             // 
             // DGV
             // 
-            this.DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.DGV.AllowUserToAddRows = false;
+            this.DGV.AllowUserToDeleteRows = false;
+            this.DGV.AllowUserToResizeRows = false;
+            this.DGV.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.DGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.VersionNumber,
+            this.VersionDescription,
+            this.ReleaseDate});
             this.DGV.Location = new System.Drawing.Point(3, 32);
             this.DGV.Name = "DGV";
+            this.DGV.ReadOnly = true;
+            this.DGV.RowHeadersVisible = false;
             this.DGV.RowTemplate.Height = 23;
+            this.DGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
             this.DGV.Size = new System.Drawing.Size(794, 387);
             this.DGV.TabIndex = 3;
+            // 
+            // VersionNumber
+            // 
+            this.VersionNumber.HeaderText = "版本号";
+            this.VersionNumber.Name = "VersionNumber";
+            this.VersionNumber.ReadOnly = true;
+            this.VersionNumber.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            // 
+            // VersionDescription
+            // 
+            this.VersionDescription.HeaderText = "版本说明";
+            this.VersionDescription.Name = "VersionDescription";
+            this.VersionDescription.ReadOnly = true;
+            this.VersionDescription.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.VersionDescription.Width = 200;
+            // 
+            // ReleaseDate
+            // 
+            this.ReleaseDate.HeaderText = "发布时间";
+            this.ReleaseDate.Name = "ReleaseDate";
+            this.ReleaseDate.ReadOnly = true;
+            this.ReleaseDate.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             // 
             // UCVersionConfiguration
             // 
@@ -82,6 +118,7 @@ namespace VersionManagement
             this.Controls.Add(this.BtnAdd);
             this.Name = "UCVersionConfiguration";
             this.Size = new System.Drawing.Size(800, 422);
+            this.Load += new System.EventHandler(this.UCVersionConfiguration_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).EndInit();
             this.ResumeLayout(false);
 
@@ -93,5 +130,8 @@ namespace VersionManagement
         private System.Windows.Forms.Button BtnEdit;
         private System.Windows.Forms.Button BtnDelete;
         private System.Windows.Forms.DataGridView DGV;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VersionNumber;
+        private System.Windows.Forms.DataGridViewTextBoxColumn VersionDescription;
+        private System.Windows.Forms.DataGridViewTextBoxColumn ReleaseDate;
     }
 }

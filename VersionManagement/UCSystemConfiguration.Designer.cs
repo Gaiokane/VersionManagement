@@ -29,21 +29,14 @@ namespace VersionManagement
         /// </summary>
         private void InitializeComponent()
         {
-            this.DGV = new System.Windows.Forms.DataGridView();
             this.BtnDelete = new System.Windows.Forms.Button();
             this.BtnEdit = new System.Windows.Forms.Button();
             this.BtnAdd = new System.Windows.Forms.Button();
+            this.DGV = new System.Windows.Forms.DataGridView();
+            this.SystemCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.SystemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
             this.SuspendLayout();
-            // 
-            // DGV
-            // 
-            this.DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.DGV.Location = new System.Drawing.Point(3, 32);
-            this.DGV.Name = "DGV";
-            this.DGV.RowTemplate.Height = 23;
-            this.DGV.Size = new System.Drawing.Size(794, 387);
-            this.DGV.TabIndex = 11;
             // 
             // BtnDelete
             // 
@@ -72,6 +65,41 @@ namespace VersionManagement
             this.BtnAdd.Text = "新增";
             this.BtnAdd.UseVisualStyleBackColor = true;
             // 
+            // DGV
+            // 
+            this.DGV.AllowUserToAddRows = false;
+            this.DGV.AllowUserToDeleteRows = false;
+            this.DGV.AllowUserToResizeRows = false;
+            this.DGV.BorderStyle = System.Windows.Forms.BorderStyle.None;
+            this.DGV.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.DisableResizing;
+            this.DGV.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.SystemCode,
+            this.SystemName});
+            this.DGV.Location = new System.Drawing.Point(3, 32);
+            this.DGV.Name = "DGV";
+            this.DGV.ReadOnly = true;
+            this.DGV.RowHeadersVisible = false;
+            this.DGV.RowTemplate.Height = 23;
+            this.DGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
+            this.DGV.Size = new System.Drawing.Size(794, 387);
+            this.DGV.TabIndex = 11;
+            // 
+            // SystemCode
+            // 
+            this.SystemCode.HeaderText = "系统编码";
+            this.SystemCode.Name = "SystemCode";
+            this.SystemCode.ReadOnly = true;
+            this.SystemCode.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.SystemCode.Width = 200;
+            // 
+            // SystemName
+            // 
+            this.SystemName.HeaderText = "系统名称";
+            this.SystemName.Name = "SystemName";
+            this.SystemName.ReadOnly = true;
+            this.SystemName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
+            this.SystemName.Width = 200;
+            // 
             // UCSystemConfiguration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
@@ -82,16 +110,18 @@ namespace VersionManagement
             this.Controls.Add(this.BtnAdd);
             this.Name = "UCSystemConfiguration";
             this.Size = new System.Drawing.Size(800, 422);
+            this.Load += new System.EventHandler(this.UCSystemConfiguration_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).EndInit();
             this.ResumeLayout(false);
 
         }
 
         #endregion
-
-        private System.Windows.Forms.DataGridView DGV;
         private System.Windows.Forms.Button BtnDelete;
         private System.Windows.Forms.Button BtnEdit;
         private System.Windows.Forms.Button BtnAdd;
+        private System.Windows.Forms.DataGridView DGV;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SystemCode;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SystemName;
     }
 }

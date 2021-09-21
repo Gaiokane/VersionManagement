@@ -35,49 +35,7 @@ namespace VersionManagement
             //DGV内容居中
             DGV.RowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
-            #region DGV测试数据
-            DGV.Rows.Add(5);
-            DGV.Rows[0].Cells["No"].Value = "1";
-            DGV.Rows[0].Cells["CorrespondingSystem"].Value = "环境空气";
-            DGV.Rows[0].Cells["Type"].Value = "类型";
-            DGV.Rows[0].Cells["PublishContent"].Value = "发布内容";
-            DGV.Rows[0].Cells["Description"].Value = "详细描述";
-            DGV.Rows[0].Cells["Remark"].Value = "备注";
-            DGV.Rows[0].Cells["CorrespondingDatabase"].Value = "对应数据库";
-            DGV.Rows[0].Cells["SQLScriptPath"].Value = "SQL脚本";
-            DGV.Rows[0].Cells["IsExecuted"].Value = true;
-            DGV.Rows[0].Cells["ExecuteSQLScript"].Value = "执行";
-            DGV.Rows[0].Cells["Edit"].Value = "编辑";
-            DGV.Rows[0].Cells["Delete"].Value = "删除";
-
-            DGV.Rows[1].Cells["No"].Value = "2";
-            DGV.Rows[1].Cells["CorrespondingSystem"].Value = "环境空气";
-            DGV.Rows[1].Cells["Type"].Value = "类型";
-            DGV.Rows[1].Cells["ExecuteSQLScript"].Value = "执行";
-            DGV.Rows[1].Cells["Edit"].Value = "编辑";
-            DGV.Rows[1].Cells["Delete"].Value = "删除";
-
-            DGV.Rows[2].Cells["No"].Value = "3";
-            DGV.Rows[2].Cells["CorrespondingSystem"].Value = "地表水";
-            DGV.Rows[2].Cells["Type"].Value = "类型";
-            DGV.Rows[2].Cells["ExecuteSQLScript"].Value = "执行";
-            DGV.Rows[2].Cells["Edit"].Value = "编辑";
-            DGV.Rows[2].Cells["Delete"].Value = "删除";
-
-            DGV.Rows[3].Cells["No"].Value = "4";
-            DGV.Rows[3].Cells["CorrespondingSystem"].Value = "环境空气";
-            DGV.Rows[3].Cells["Type"].Value = "类型";
-            DGV.Rows[3].Cells["ExecuteSQLScript"].Value = "执行";
-            DGV.Rows[3].Cells["Edit"].Value = "编辑";
-            DGV.Rows[3].Cells["Delete"].Value = "删除";
-
-            DGV.Rows[4].Cells["No"].Value = "5";
-            DGV.Rows[4].Cells["CorrespondingSystem"].Value = "基础";
-            DGV.Rows[4].Cells["Type"].Value = "类型";
-            DGV.Rows[4].Cells["ExecuteSQLScript"].Value = "执行";
-            DGV.Rows[4].Cells["Edit"].Value = "编辑";
-            DGV.Rows[4].Cells["Delete"].Value = "删除";
-            #endregion
+            BindDGV();
         }
 
         #region 重新绑定 版本号 下拉框数据
@@ -121,6 +79,62 @@ namespace VersionManagement
             {
                 ComboBoxCorrespondingSystem.SelectedIndex = 0;
             }
+        }
+        #endregion
+
+        #region 重新绑定 版本详情 DGV数据
+        /// <summary>
+        /// 重新绑定 版本详情 DGV数据
+        /// </summary>
+        private void BindDGV()
+        {
+            DGV.Rows.Clear();
+
+            #region DGV测试数据
+            DGV.Rows.Add(5);
+            DGV.Rows[0].Cells["No"].Value = "1";
+            DGV.Rows[0].Cells["CorrespondingSystem"].Value = "环境空气";
+            DGV.Rows[0].Cells["Type"].Value = "类型";
+            DGV.Rows[0].Cells["PublishContent"].Value = "发布内容";
+            DGV.Rows[0].Cells["Description"].Value = "详细描述";
+            DGV.Rows[0].Cells["Remark"].Value = "备注";
+            DGV.Rows[0].Cells["CorrespondingDatabase"].Value = "对应数据库";
+            DGV.Rows[0].Cells["SQLScriptPath"].Value = "SQL脚本";
+            DGV.Rows[0].Cells["IsExecuted"].Value = true;
+            DGV.Rows[0].Cells["ExecuteSQLScript"].Value = "执行";
+            DGV.Rows[0].Cells["Edit"].Value = "编辑";
+            DGV.Rows[0].Cells["Delete"].Value = "删除";
+
+            DGV.Rows[1].Cells["No"].Value = "2";
+            DGV.Rows[1].Cells["CorrespondingSystem"].Value = "环境空气";
+            DGV.Rows[1].Cells["Type"].Value = "类型";
+            DGV.Rows[1].Cells["ExecuteSQLScript"].Value = "执行";
+            DGV.Rows[1].Cells["Edit"].Value = "编辑";
+            DGV.Rows[1].Cells["Delete"].Value = "删除";
+
+            DGV.Rows[2].Cells["No"].Value = "3";
+            DGV.Rows[2].Cells["CorrespondingSystem"].Value = "地表水";
+            DGV.Rows[2].Cells["Type"].Value = "类型";
+            DGV.Rows[2].Cells["ExecuteSQLScript"].Value = "执行";
+            DGV.Rows[2].Cells["Edit"].Value = "编辑";
+            DGV.Rows[2].Cells["Delete"].Value = "删除";
+
+            DGV.Rows[3].Cells["No"].Value = "4";
+            DGV.Rows[3].Cells["CorrespondingSystem"].Value = "环境空气";
+            DGV.Rows[3].Cells["Type"].Value = "类型";
+            DGV.Rows[3].Cells["ExecuteSQLScript"].Value = "执行";
+            DGV.Rows[3].Cells["Edit"].Value = "编辑";
+            DGV.Rows[3].Cells["Delete"].Value = "删除";
+
+            DGV.Rows[4].Cells["No"].Value = "5";
+            DGV.Rows[4].Cells["CorrespondingSystem"].Value = "基础";
+            DGV.Rows[4].Cells["Type"].Value = "类型";
+            DGV.Rows[4].Cells["ExecuteSQLScript"].Value = "执行";
+            DGV.Rows[4].Cells["Edit"].Value = "编辑";
+            DGV.Rows[4].Cells["Delete"].Value = "删除";
+            #endregion
+
+            DGV.ClearSelection();
         }
         #endregion
 
