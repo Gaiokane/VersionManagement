@@ -119,6 +119,17 @@ namespace VersionManagement.Helper
         }
 
         /// <summary>
+        /// 配置文件中修改键值对，在指定key的value中新增内容
+        /// </summary>
+        /// <param name="key"></param>
+        /// <param name="value"></param>
+        /// <returns>返回true,false</returns>
+        public static bool EditappSettingsAddValue(string key, string addvalue, char split)
+        {
+            return ConfigHelper.EditappSettingsAddValue(key, addvalue, split, CONFIGPATH);
+        }
+
+        /// <summary>
         /// 配置文件中读取指定key
         /// </summary>
         /// <param name="key"></param>

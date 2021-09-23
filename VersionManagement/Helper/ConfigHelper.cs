@@ -96,7 +96,7 @@ namespace VersionManagement.Helper
                 {
                     List<string> temp = GetappSettingsSplitBySemicolon(key, split, configpath);
                     temp.Remove(delValue);
-                    if (EditappSettings(key, string.Join(";", temp.ToArray()), configpath))
+                    if (EditappSettings(key, string.Join(split.ToString(), temp.ToArray()), configpath))
                     {
                         return true;
                     }
@@ -133,6 +133,44 @@ namespace VersionManagement.Helper
                 {
                     RWConfig.SetappSettingsValue(key, value, configpath);
                     return true;
+                }
+                else
+                {
+                    return false;
+                }
+            }
+            catch (Exception)
+            {
+                return false;
+            }
+        }
+        #endregion
+
+        #region 修改appSettings配置，在指定key的value中新增内容
+        /// <summary>
+        /// 修改appSettings配置，在指定key的value中新增内容
+        /// </summary>
+        /// <param name="key">appSettings键</param>
+        /// <param name="addvalue">指定key中要新增的指定value</param>
+        /// <param name="split">value中分隔符</param>
+        /// <param name="configpath">配置文件</param>
+        /// <returns>true, false</returns>
+        public static bool EditappSettingsAddValue(string key, string addvalue, char split, string configpath)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(RWConfig.GetappSettingsValue(key, configpath)))
+                {
+                    List<string> temp = GetappSettingsSplitBySemicolon(key, split, configpath);
+                    temp.Add(addvalue);
+                    if (EditappSettings(key, string.Join(split.ToString(), temp.ToArray()), configpath))
+                    {
+                        return true;
+                    }
+                    else
+                    {
+                        return false;
+                    }
                 }
                 else
                 {
