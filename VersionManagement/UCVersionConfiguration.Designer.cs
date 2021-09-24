@@ -136,7 +136,7 @@ namespace VersionManagement
             this.GroupBoxAddEdit.Size = new System.Drawing.Size(383, 220);
             this.GroupBoxAddEdit.TabIndex = 4;
             this.GroupBoxAddEdit.TabStop = false;
-            this.GroupBoxAddEdit.Text = "新增/编辑版本";
+            this.GroupBoxAddEdit.Text = "新增/编辑版本配置";
             // 
             // BtnCancel
             // 

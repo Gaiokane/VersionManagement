@@ -130,6 +130,7 @@ namespace VersionManagement
             if (action == 0)
             {
                 GroupBoxAddEdit.Visible = false;
+                TextBoxVersionNumber.Enabled = true;
 
                 BtnAdd.Enabled = true;
                 BtnEdit.Enabled = true;
@@ -137,7 +138,7 @@ namespace VersionManagement
             }
             else if (action == 1)
             {
-                GroupBoxAddEdit.Text = "新增版本";
+                GroupBoxAddEdit.Text = "新增版本配置";
                 TextBoxVersionNumber.Text = "";
                 DateTimePickerReleaseDate.Value = Convert.ToDateTime(DateTime.Now.ToString("yyyy-MM-dd"));
                 RichTextBoxVersionDescription.Text = "";
@@ -151,7 +152,7 @@ namespace VersionManagement
             }
             else if (action == 2)
             {
-                GroupBoxAddEdit.Text = "编辑版本";
+                GroupBoxAddEdit.Text = "编辑版本配置";
                 //版本号 版本说明 发布时间
                 TextBoxVersionNumber.Text = DGV.SelectedCells[0].Value.ToString();
                 TextBoxVersionNumber.Enabled = false;

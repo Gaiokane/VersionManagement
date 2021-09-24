@@ -35,7 +35,15 @@ namespace VersionManagement
             this.DGV = new System.Windows.Forms.DataGridView();
             this.SystemCode = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.SystemName = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.GroupBoxAddEdit = new System.Windows.Forms.GroupBox();
+            this.BtnCancel = new System.Windows.Forms.Button();
+            this.BtnSave = new System.Windows.Forms.Button();
+            this.label2 = new System.Windows.Forms.Label();
+            this.TextBoxSystemCode = new System.Windows.Forms.TextBox();
+            this.label1 = new System.Windows.Forms.Label();
+            this.TextBoxSystemName = new System.Windows.Forms.TextBox();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
+            this.GroupBoxAddEdit.SuspendLayout();
             this.SuspendLayout();
             // 
             // BtnDelete
@@ -46,6 +54,7 @@ namespace VersionManagement
             this.BtnDelete.TabIndex = 10;
             this.BtnDelete.Text = "删除";
             this.BtnDelete.UseVisualStyleBackColor = true;
+            this.BtnDelete.Click += new System.EventHandler(this.BtnDelete_Click);
             // 
             // BtnEdit
             // 
@@ -55,6 +64,7 @@ namespace VersionManagement
             this.BtnEdit.TabIndex = 9;
             this.BtnEdit.Text = "编辑";
             this.BtnEdit.UseVisualStyleBackColor = true;
+            this.BtnEdit.Click += new System.EventHandler(this.BtnEdit_Click);
             // 
             // BtnAdd
             // 
@@ -64,6 +74,7 @@ namespace VersionManagement
             this.BtnAdd.TabIndex = 8;
             this.BtnAdd.Text = "新增";
             this.BtnAdd.UseVisualStyleBackColor = true;
+            this.BtnAdd.Click += new System.EventHandler(this.BtnAdd_Click);
             // 
             // DGV
             // 
@@ -100,10 +111,78 @@ namespace VersionManagement
             this.SystemName.SortMode = System.Windows.Forms.DataGridViewColumnSortMode.NotSortable;
             this.SystemName.Width = 200;
             // 
+            // GroupBoxAddEdit
+            // 
+            this.GroupBoxAddEdit.Controls.Add(this.TextBoxSystemName);
+            this.GroupBoxAddEdit.Controls.Add(this.BtnCancel);
+            this.GroupBoxAddEdit.Controls.Add(this.BtnSave);
+            this.GroupBoxAddEdit.Controls.Add(this.label2);
+            this.GroupBoxAddEdit.Controls.Add(this.TextBoxSystemCode);
+            this.GroupBoxAddEdit.Controls.Add(this.label1);
+            this.GroupBoxAddEdit.Location = new System.Drawing.Point(209, 156);
+            this.GroupBoxAddEdit.Name = "GroupBoxAddEdit";
+            this.GroupBoxAddEdit.Size = new System.Drawing.Size(383, 110);
+            this.GroupBoxAddEdit.TabIndex = 12;
+            this.GroupBoxAddEdit.TabStop = false;
+            this.GroupBoxAddEdit.Text = "新增/编辑系统配置";
+            // 
+            // BtnCancel
+            // 
+            this.BtnCancel.Location = new System.Drawing.Point(194, 71);
+            this.BtnCancel.Name = "BtnCancel";
+            this.BtnCancel.Size = new System.Drawing.Size(75, 23);
+            this.BtnCancel.TabIndex = 7;
+            this.BtnCancel.Text = "取消";
+            this.BtnCancel.UseVisualStyleBackColor = true;
+            this.BtnCancel.Click += new System.EventHandler(this.BtnCancel_Click);
+            // 
+            // BtnSave
+            // 
+            this.BtnSave.Location = new System.Drawing.Point(113, 71);
+            this.BtnSave.Name = "BtnSave";
+            this.BtnSave.Size = new System.Drawing.Size(75, 23);
+            this.BtnSave.TabIndex = 6;
+            this.BtnSave.Text = "保存";
+            this.BtnSave.UseVisualStyleBackColor = true;
+            this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
+            // 
+            // label2
+            // 
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(96, 48);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(65, 12);
+            this.label2.TabIndex = 2;
+            this.label2.Text = "系统名称：";
+            // 
+            // TextBoxSystemCode
+            // 
+            this.TextBoxSystemCode.Location = new System.Drawing.Point(167, 17);
+            this.TextBoxSystemCode.Name = "TextBoxSystemCode";
+            this.TextBoxSystemCode.Size = new System.Drawing.Size(120, 21);
+            this.TextBoxSystemCode.TabIndex = 1;
+            // 
+            // label1
+            // 
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(96, 20);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(65, 12);
+            this.label1.TabIndex = 0;
+            this.label1.Text = "系统编码：";
+            // 
+            // TextBoxSystemName
+            // 
+            this.TextBoxSystemName.Location = new System.Drawing.Point(167, 44);
+            this.TextBoxSystemName.Name = "TextBoxSystemName";
+            this.TextBoxSystemName.Size = new System.Drawing.Size(120, 21);
+            this.TextBoxSystemName.TabIndex = 8;
+            // 
             // UCSystemConfiguration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.GroupBoxAddEdit);
             this.Controls.Add(this.DGV);
             this.Controls.Add(this.BtnDelete);
             this.Controls.Add(this.BtnEdit);
@@ -112,6 +191,8 @@ namespace VersionManagement
             this.Size = new System.Drawing.Size(800, 422);
             this.Load += new System.EventHandler(this.UCSystemConfiguration_Load);
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).EndInit();
+            this.GroupBoxAddEdit.ResumeLayout(false);
+            this.GroupBoxAddEdit.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -123,5 +204,12 @@ namespace VersionManagement
         private System.Windows.Forms.DataGridView DGV;
         private System.Windows.Forms.DataGridViewTextBoxColumn SystemCode;
         private System.Windows.Forms.DataGridViewTextBoxColumn SystemName;
+        private System.Windows.Forms.GroupBox GroupBoxAddEdit;
+        private System.Windows.Forms.Button BtnCancel;
+        private System.Windows.Forms.Button BtnSave;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.TextBox TextBoxSystemCode;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.TextBox TextBoxSystemName;
     }
 }
