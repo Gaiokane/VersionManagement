@@ -26,7 +26,7 @@ namespace VersionManagement
             //绑定DGV数据
             BindDGV();
 
-            //新增/编辑版本默认隐藏
+            //新增/编辑系统配置默认隐藏
             GroupBoxAddEdit.Visible = false;
         }
 
@@ -141,7 +141,6 @@ namespace VersionManagement
             else if (action == 2)
             {
                 GroupBoxAddEdit.Text = "编辑系统配置";
-                //版本号 版本说明 发布时间
                 TextBoxSystemCode.Text = DGV.SelectedCells[0].Value.ToString();
                 TextBoxSystemCode.Enabled = false;
                 TextBoxSystemName.Text = DGV.SelectedCells[1].Value.ToString();

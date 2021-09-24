@@ -26,13 +26,13 @@ namespace VersionManagement
             //绑定DGV数据
             BindDGV();
 
-            //新增/编辑版本默认隐藏
+            //新增/编辑版本配置默认隐藏
             GroupBoxAddEdit.Visible = false;
 
-            //新增/编辑版本-RichTextBox增加右键菜单
+            //新增/编辑版本配置-RichTextBox增加右键菜单
             _ = new RichTextBoxMenu(RichTextBoxVersionDescription);
 
-            //新增/编辑版本-发布时间格式
+            //新增/编辑版本配置-发布时间格式
             DateTimePickerReleaseDate.Format = DateTimePickerFormat.Custom;
             DateTimePickerReleaseDate.CustomFormat = "yyyy-MM-dd";
         }
@@ -153,7 +153,6 @@ namespace VersionManagement
             else if (action == 2)
             {
                 GroupBoxAddEdit.Text = "编辑版本配置";
-                //版本号 版本说明 发布时间
                 TextBoxVersionNumber.Text = DGV.SelectedCells[0].Value.ToString();
                 TextBoxVersionNumber.Enabled = false;
                 DateTimePickerReleaseDate.Value = Convert.ToDateTime(DGV.SelectedCells[2].Value.ToString());
