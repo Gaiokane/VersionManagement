@@ -163,7 +163,7 @@ namespace VersionManagement
             {
                 //<add key="System" value="System_Base;System_Air;" />
                 //<add key="System_Base" value="基础" />
-                //获取所有Version
+                //获取所有System
                 List<string> temp = VersionConfig.GetappSettingsSplitBySemicolon("System", ';');
                 //校验重复
                 if (temp.Contains("System_" + TextBoxSystemCode.Text.Trim()))
