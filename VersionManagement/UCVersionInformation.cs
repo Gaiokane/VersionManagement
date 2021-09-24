@@ -73,7 +73,7 @@ namespace VersionManagement
             list.Reverse();
             foreach (var item in list)
             {
-                ComboBoxCorrespondingSystem.Items.Add(VersionConfig.GetappSettings(item));
+                ComboBoxCorrespondingSystem.Items.Add(VersionConfig.GetappSettingsSplitBySemicolon(item, ';')[0]);
             }
             if (ComboBoxCorrespondingSystem.Items.Count > 0)
             {

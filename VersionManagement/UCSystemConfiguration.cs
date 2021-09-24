@@ -44,7 +44,7 @@ namespace VersionManagement
             {
                 List<string> detailslist = VersionConfig.GetappSettingsSplitBySemicolon(list[i], ';');
                 //SystemCode 系统编码
-                DGV.Rows[i].Cells["SystemCode"].Value = list[i];
+                DGV.Rows[i].Cells["SystemCode"].Value = list[i].Split('_')[1];
                 //SystemName 系统名称
                 DGV.Rows[i].Cells["SystemName"].Value = detailslist[0];
             }
@@ -98,7 +98,7 @@ namespace VersionManagement
                 {
                     if (DialogResult.OK == MessageBox.Show("确认删除系统编码：" + DGV.SelectedCells[0].Value.ToString() + "？", "确认删除？", MessageBoxButtons.OKCancel))
                     {
-                        if (VersionConfig.DelappSettingsByValue("System", DGV.SelectedCells[0].Value.ToString(), ';'))
+                        if (VersionConfig.DelappSettingsByValue("System", "System_" + DGV.SelectedCells[0].Value.ToString(), ';'))
                         {
                             MessageBox.Show("删除成功！");
                             BindDGV();
@@ -190,7 +190,7 @@ namespace VersionManagement
             }
             else if (ACTION == 2)
             {
-                bool editVerison = VersionConfig.AddappSettings(TextBoxSystemCode.Text.Trim(), TextBoxSystemName.Text.Trim() + ";");
+                bool editVerison = VersionConfig.AddappSettings("System_" + TextBoxSystemCode.Text.Trim(), TextBoxSystemName.Text.Trim() + ";");
                 if (editVerison)
                 {
                     MessageBox.Show("编辑成功！");
