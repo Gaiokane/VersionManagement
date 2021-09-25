@@ -58,7 +58,7 @@ namespace VersionManagement.Helper
             }
             if (string.IsNullOrEmpty(DatabaseConn))
             {
-                ConfigHelper.AddappSettings("DatabaseConn", @"127.0.0.1\SQL2012;sa;123456", CONFIGPATH);
+                ConfigHelper.AddappSettings("DatabaseConn", @"127.0.0.1\SQL2012,1433;sa;123456;", CONFIGPATH);
             }
         }
         #endregion

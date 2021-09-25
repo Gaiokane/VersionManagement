@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.SqlClient;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -25,6 +26,9 @@ namespace VersionManagement
         {
             //绑定DGV数据
             BindDGV();
+
+            //绑定数据库连接配置
+            BindSQLConn();
 
             //新增/编辑数据库配置默认隐藏
             GroupBoxAddEdit.Visible = false;
@@ -213,5 +217,67 @@ namespace VersionManagement
             SetAddEditControlState(ACTION);
             BindDGV();
         }
+
+        private void LinkLabelTestConn_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
+        {
+            string sqlconn;
+
+            if (DGV.SelectedRows.Count != 0)
+            {
+                sqlconn = "server=" + TextBoxSQLUrl.Text.Trim() + "; database=" + DGV.SelectedCells[1].Value.ToString() + "; uid=" + TextBoxSQLUsername.Text.Trim() + "; pwd=" + TextBoxSQLPassword.Text.Trim() + "";
+            }
+            else
+            {
+                sqlconn = "server=" + TextBoxSQLUrl.Text.Trim() + "; uid=" + TextBoxSQLUsername.Text.Trim() + "; pwd=" + TextBoxSQLPassword.Text.Trim() + "";
+            }
+
+            SqlConnection mssqlconn = new SqlConnection(sqlconn);
+            try
+            {
+                mssqlconn.Open();
+                if (mssqlconn.State == ConnectionState.Open)
+                {
+                    MessageBox.Show("状态：已连接");
+                }
+                else
+                {
+                    MessageBox.Show("连不上");
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+            finally
+            {
+                DGV.ClearSelection();
+            }
+        }
+
+        private void BtnSQLConnSave_Click(object sender, EventArgs e)
+        {
+            bool editDatabaseConn = DefaultConfig.AddappSettings("DatabaseConn", TextBoxSQLUrl.Text.Trim() + ";" + TextBoxSQLUsername.Text.Trim() + ";" + TextBoxSQLPassword.Text.Trim() + ";");
+            if (editDatabaseConn)
+            {
+                MessageBox.Show("保存成功！");
+            }
+            else
+            {
+                MessageBox.Show("保存失败！");
+            }
+        }
+
+        #region 重新绑定 数据库连接配置 数据
+        /// <summary>
+        /// 重新绑定 数据库连接配置 数据
+        /// </summary>
+        private void BindSQLConn()
+        {
+            List<string> list = DefaultConfig.GetappSettingsSplitBySemicolon("DatabaseConn", ';');
+            TextBoxSQLUrl.Text = list[0];
+            TextBoxSQLUsername.Text = list[1];
+            TextBoxSQLPassword.Text = list[2];
+        }
+        #endregion
     }
 }

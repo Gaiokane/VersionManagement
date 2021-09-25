@@ -66,6 +66,7 @@
     <Compile Include="FormMain.Designer.cs">
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="Helper\CMDHelper.cs" />
     <Compile Include="Helper\ConfigHelper.cs" />
     <Compile Include="Helper\DefaultConfig.cs" />
     <Compile Include="Helper\RichTextBoxMenu.cs" />

@@ -42,8 +42,18 @@ namespace VersionManagement
             this.label2 = new System.Windows.Forms.Label();
             this.TextBoxDatabaseCode = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
+            this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.label3 = new System.Windows.Forms.Label();
+            this.TextBoxSQLUrl = new System.Windows.Forms.TextBox();
+            this.label4 = new System.Windows.Forms.Label();
+            this.TextBoxSQLUsername = new System.Windows.Forms.TextBox();
+            this.label5 = new System.Windows.Forms.Label();
+            this.TextBoxSQLPassword = new System.Windows.Forms.TextBox();
+            this.LinkLabelTestConn = new System.Windows.Forms.LinkLabel();
+            this.BtnSQLConnSave = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
             this.GroupBoxAddEdit.SuspendLayout();
+            this.groupBox1.SuspendLayout();
             this.SuspendLayout();
             // 
             // BtnDelete
@@ -92,7 +102,7 @@ namespace VersionManagement
             this.DGV.RowHeadersVisible = false;
             this.DGV.RowTemplate.Height = 23;
             this.DGV.SelectionMode = System.Windows.Forms.DataGridViewSelectionMode.FullRowSelect;
-            this.DGV.Size = new System.Drawing.Size(794, 387);
+            this.DGV.Size = new System.Drawing.Size(794, 331);
             this.DGV.TabIndex = 7;
             // 
             // DatabaseCode
@@ -178,10 +188,97 @@ namespace VersionManagement
             this.label1.TabIndex = 0;
             this.label1.Text = "数据库编码：";
             // 
+            // groupBox1
+            // 
+            this.groupBox1.Controls.Add(this.BtnSQLConnSave);
+            this.groupBox1.Controls.Add(this.LinkLabelTestConn);
+            this.groupBox1.Controls.Add(this.TextBoxSQLPassword);
+            this.groupBox1.Controls.Add(this.label5);
+            this.groupBox1.Controls.Add(this.TextBoxSQLUsername);
+            this.groupBox1.Controls.Add(this.label4);
+            this.groupBox1.Controls.Add(this.TextBoxSQLUrl);
+            this.groupBox1.Controls.Add(this.label3);
+            this.groupBox1.Location = new System.Drawing.Point(3, 369);
+            this.groupBox1.Name = "groupBox1";
+            this.groupBox1.Size = new System.Drawing.Size(794, 50);
+            this.groupBox1.TabIndex = 15;
+            this.groupBox1.TabStop = false;
+            this.groupBox1.Text = "数据库连接配置";
+            // 
+            // label3
+            // 
+            this.label3.AutoSize = true;
+            this.label3.Location = new System.Drawing.Point(27, 22);
+            this.label3.Name = "label3";
+            this.label3.Size = new System.Drawing.Size(77, 12);
+            this.label3.TabIndex = 0;
+            this.label3.Text = "数据库地址：";
+            // 
+            // TextBoxSQLUrl
+            // 
+            this.TextBoxSQLUrl.Location = new System.Drawing.Point(110, 18);
+            this.TextBoxSQLUrl.Name = "TextBoxSQLUrl";
+            this.TextBoxSQLUrl.Size = new System.Drawing.Size(200, 21);
+            this.TextBoxSQLUrl.TabIndex = 1;
+            // 
+            // label4
+            // 
+            this.label4.AutoSize = true;
+            this.label4.Location = new System.Drawing.Point(316, 22);
+            this.label4.Name = "label4";
+            this.label4.Size = new System.Drawing.Size(53, 12);
+            this.label4.TabIndex = 2;
+            this.label4.Text = "用户名：";
+            // 
+            // TextBoxSQLUsername
+            // 
+            this.TextBoxSQLUsername.Location = new System.Drawing.Point(375, 18);
+            this.TextBoxSQLUsername.Name = "TextBoxSQLUsername";
+            this.TextBoxSQLUsername.Size = new System.Drawing.Size(100, 21);
+            this.TextBoxSQLUsername.TabIndex = 3;
+            // 
+            // label5
+            // 
+            this.label5.AutoSize = true;
+            this.label5.Location = new System.Drawing.Point(481, 22);
+            this.label5.Name = "label5";
+            this.label5.Size = new System.Drawing.Size(41, 12);
+            this.label5.TabIndex = 4;
+            this.label5.Text = "密码：";
+            // 
+            // TextBoxSQLPassword
+            // 
+            this.TextBoxSQLPassword.Location = new System.Drawing.Point(528, 18);
+            this.TextBoxSQLPassword.Name = "TextBoxSQLPassword";
+            this.TextBoxSQLPassword.Size = new System.Drawing.Size(100, 21);
+            this.TextBoxSQLPassword.TabIndex = 5;
+            // 
+            // LinkLabelTestConn
+            // 
+            this.LinkLabelTestConn.AutoSize = true;
+            this.LinkLabelTestConn.Location = new System.Drawing.Point(634, 22);
+            this.LinkLabelTestConn.Name = "LinkLabelTestConn";
+            this.LinkLabelTestConn.Size = new System.Drawing.Size(53, 12);
+            this.LinkLabelTestConn.TabIndex = 6;
+            this.LinkLabelTestConn.TabStop = true;
+            this.LinkLabelTestConn.Text = "测试连接";
+            this.LinkLabelTestConn.LinkClicked += new System.Windows.Forms.LinkLabelLinkClickedEventHandler(this.LinkLabelTestConn_LinkClicked);
+            // 
+            // BtnSQLConnSave
+            // 
+            this.BtnSQLConnSave.Location = new System.Drawing.Point(693, 17);
+            this.BtnSQLConnSave.Name = "BtnSQLConnSave";
+            this.BtnSQLConnSave.Size = new System.Drawing.Size(75, 23);
+            this.BtnSQLConnSave.TabIndex = 7;
+            this.BtnSQLConnSave.Text = "保存";
+            this.BtnSQLConnSave.UseVisualStyleBackColor = true;
+            this.BtnSQLConnSave.Click += new System.EventHandler(this.BtnSQLConnSave_Click);
+            // 
             // UCDatabaseConfiguration
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
+            this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.GroupBoxAddEdit);
             this.Controls.Add(this.DGV);
             this.Controls.Add(this.BtnDelete);
@@ -193,6 +290,8 @@ namespace VersionManagement
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).EndInit();
             this.GroupBoxAddEdit.ResumeLayout(false);
             this.GroupBoxAddEdit.PerformLayout();
+            this.groupBox1.ResumeLayout(false);
+            this.groupBox1.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -211,5 +310,14 @@ namespace VersionManagement
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox TextBoxDatabaseCode;
         private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.GroupBox groupBox1;
+        private System.Windows.Forms.Label label3;
+        private System.Windows.Forms.TextBox TextBoxSQLUrl;
+        private System.Windows.Forms.Label label4;
+        private System.Windows.Forms.Label label5;
+        private System.Windows.Forms.TextBox TextBoxSQLUsername;
+        private System.Windows.Forms.TextBox TextBoxSQLPassword;
+        private System.Windows.Forms.LinkLabel LinkLabelTestConn;
+        private System.Windows.Forms.Button BtnSQLConnSave;
     }
 }
