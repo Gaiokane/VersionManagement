@@ -29,13 +29,20 @@ namespace VersionManagement
             //默认配置文件读取配置
             DefaultConfigFill();
 
-            //版本配置文件对应文件的初始化
+            //获取程序根目录
             string rootPath = Environment.CurrentDirectory;
-            //创建对应文件
-            FileStream versionfile = File.Create(rootPath + "\\Version");
-            versionfile.Close();
+            FileStream fileStream;
+            //版本配置文件对应文件的初始化
+            fileStream = File.Create(rootPath + "\\Version");
+            //版本配置文件对应文件的初始化
+            fileStream = File.Create(rootPath + "\\ExecutionStatus");
+            fileStream.Close();
+
             //版本配置文件初始化
             VersionConfig.Init();
+
+            //执行状态配置文件初始化
+            ExecutionStatusConfig.Init();
 
             //初始化加载用户控件
             panel1.Controls.Clear();
