@@ -129,10 +129,12 @@ namespace VersionManagement.Helper
         /// 配置文件中读取指定key，并按指定字符分隔
         /// </summary>
         /// <param name="key"></param>
+        /// <param name="split">value中分隔符</param>
+        /// <param name="removeEmpty">是否移除空行，默认是</param>
         /// <returns>返回分隔后的数组</returns>
-        public static List<string> GetappSettingsSplitBySemicolon(string key, char split)
+        public static List<string> GetappSettingsSplitBySemicolon(string key, char split, bool removeEmpty = true)
         {
-            return ConfigHelper.GetappSettingsSplitBySemicolon(key, split, CONFIGPATH);
+            return ConfigHelper.GetappSettingsSplitBySemicolon(key, split, CONFIGPATH, removeEmpty);
         }
         #endregion
     }

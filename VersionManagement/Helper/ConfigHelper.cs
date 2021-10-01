@@ -204,9 +204,11 @@ namespace VersionManagement.Helper
         /// 查询appSettings配置，并对键值以指定字符分隔
         /// </summary>
         /// <param name="key">appSettings键</param>
+        /// <param name="split">value中分隔符</param>
         /// <param name="configpath">配置文件</param>
+        /// <param name="removeEmpty">是否移除空行，默认是</param>
         /// <returns>appSettings值，以指定字符分隔，返回数组</returns>
-        public static List<string> GetappSettingsSplitBySemicolon(string key, char split, string configpath)
+        public static List<string> GetappSettingsSplitBySemicolon(string key, char split, string configpath, bool removeEmpty = true)
         {
             List<string> result = new List<string>();
             string values;
@@ -225,9 +227,12 @@ namespace VersionManagement.Helper
                         break;
                     }
                 }
-                if (string.IsNullOrEmpty(result[result.Count - 1]))
+                if (removeEmpty == true)
                 {
-                    result.Remove(result[result.Count - 1]);
+                    if (string.IsNullOrEmpty(result[result.Count - 1]))
+                    {
+                        result.Remove(result[result.Count - 1]);
+                    }
                 }
                 return result;
             }
