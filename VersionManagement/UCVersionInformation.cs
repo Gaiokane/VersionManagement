@@ -91,7 +91,7 @@ namespace VersionManagement
             DGV.Rows.Clear();
 
             #region DGV测试数据
-            DGV.Rows.Add(5);
+            DGV.Rows.Add(6);
             DGV.Rows[0].Cells["No"].Value = "1";
             DGV.Rows[0].Cells["CorrespondingSystem"].Value = "环境空气";
             DGV.Rows[0].Cells["Type"].Value = "类型";
@@ -132,6 +132,90 @@ namespace VersionManagement
             DGV.Rows[4].Cells["ExecuteSQLScript"].Value = "执行";
             DGV.Rows[4].Cells["Edit"].Value = "编辑";
             DGV.Rows[4].Cells["Delete"].Value = "删除";
+
+            DGV.Rows[5].Cells[0].Value = "6";
+            DGV.Rows[5].Cells[1].Value = "";
+            DGV.Rows[5].Cells[2].Value = "";
+            #endregion
+
+            #region 动态获取数据
+            //配置文件中取出对应数据，总行数添加到dgv，遍历存到各列
+            DGV.Rows.Clear();
+            //版本号，去掉前缀
+            //string VersionNumber = "V100";
+            string VersionNumber = ComboBoxVersionNumber.SelectedItem.ToString();
+            //对应系统，去掉前缀
+            //string CorrespondingSystem = "Base";
+            string findValue = "";
+            if (ComboBoxCorrespondingSystem.Items.Count > 0)
+            {
+                findValue = ComboBoxCorrespondingSystem.SelectedItem.ToString();
+            }
+            //获取对应系统下拉框所选项对应的key
+            string SystemKey = VersionConfig.GetappSettingsKeyByValue("System", ';', findValue);
+            string CorrespondingSystem = "";
+            if (!string.IsNullOrEmpty(SystemKey))
+            {
+                CorrespondingSystem = SystemKey.Split('_')[1];
+            }
+
+            //选择版本号+某一个系统
+            List<string> list;
+            list = VersionConfig.GetappSettingsSplitBySemicolon("Detail_" + VersionNumber + "_" + CorrespondingSystem, ';');
+            //所选版本对应系统有版本信息
+            if (list.Count > 0)
+            {
+                DGV.Rows.Add(list.Count);
+                for (int i = 0; i < list.Count; i++)
+                {
+                    List<string> detailslist = VersionConfig.GetappSettingsSplitBySemicolon(list[i], ';', false);
+                    //序号，按排序号排序后序号会乱，后面重新渲染
+                    //DGV.Rows[i].Cells["No"].Value = i + 1;
+                    //对应系统
+                    DGV.Rows[i].Cells["CorrespondingSystem"].Value = VersionConfig.GetappSettings(SystemKey);
+                    //类型
+                    DGV.Rows[i].Cells["Type"].Value = VersionConfig.GetappSettings(detailslist[0]);
+                    //排序号，列表隐藏，用作数据排序
+                    DGV.Rows[i].Cells["SortNum"].Value = detailslist[1];
+                    //发布内容
+                    DGV.Rows[i].Cells["PublishContent"].Value = detailslist[2];
+                    //详细描述
+                    DGV.Rows[i].Cells["Description"].Value = detailslist[3];
+                    //备注
+                    DGV.Rows[i].Cells["Remark"].Value = detailslist[4];
+                    //对应数据库
+                    DGV.Rows[i].Cells["CorrespondingDatabase"].Value = detailslist[5];
+                    //SQL脚本
+                    DGV.Rows[i].Cells["SQLScriptPath"].Value = detailslist[6];
+                    //是否已执行
+                    string executionStatus = ExecutionStatusConfig.GetappSettings("ExecutionStatus_" + list[i]);
+                    if (string.IsNullOrEmpty(executionStatus))
+                    {
+                        DGV.Rows[i].Cells["IsExecuted"].Value = false;
+                    }
+                    else if (executionStatus.Split(';')[0] == "1")
+                    {
+                        DGV.Rows[i].Cells["IsExecuted"].Value = true;
+                    }
+                    else
+                    {
+                        DGV.Rows[i].Cells["IsExecuted"].Value = false;
+                    }
+                    //执行按钮文字
+                    DGV.Rows[i].Cells["ExecuteSQLScript"].Value = "执行";
+                    //编辑按钮文字
+                    DGV.Rows[i].Cells["Edit"].Value = "编辑";
+                    //删除按钮文字
+                    DGV.Rows[i].Cells["Delete"].Value = "删除";
+                }
+                //列表按排序号降序显示
+                DGV.Sort(DGV.Columns["SortNum"], ListSortDirection.Descending);
+                //排序后对序号列重新渲染
+                for (int i = 0; i < DGV.Rows.Count; i++)
+                {
+                    DGV.Rows[i].Cells["No"].Value = i + 1;
+                }
+            }
             #endregion
 
             DGV.ClearSelection();
@@ -235,6 +319,16 @@ namespace VersionManagement
             {
                 MessageBox.Show("删除\r\n序号：" + DGV.Rows[e.RowIndex].Cells[0].Value + "\r\n对应系统：" + DGV.Rows[e.RowIndex].Cells[1].Value);
             }
+        }
+
+        private void ComboBoxVersionNumber_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BindDGV();
+        }
+
+        private void ComboBoxCorrespondingSystem_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            BindDGV();
         }
     }
 }

@@ -45,6 +45,7 @@
             this.ExecuteSQLScript = new System.Windows.Forms.DataGridViewLinkColumn();
             this.Edit = new System.Windows.Forms.DataGridViewLinkColumn();
             this.Delete = new System.Windows.Forms.DataGridViewLinkColumn();
+            this.SortNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
             this.SuspendLayout();
             // 
@@ -64,6 +65,7 @@
             this.ComboBoxVersionNumber.Name = "ComboBoxVersionNumber";
             this.ComboBoxVersionNumber.Size = new System.Drawing.Size(121, 20);
             this.ComboBoxVersionNumber.TabIndex = 1;
+            this.ComboBoxVersionNumber.SelectedIndexChanged += new System.EventHandler(this.ComboBoxVersionNumber_SelectedIndexChanged);
             // 
             // LabelCorrespondingSystem
             // 
@@ -81,6 +83,7 @@
             this.ComboBoxCorrespondingSystem.Name = "ComboBoxCorrespondingSystem";
             this.ComboBoxCorrespondingSystem.Size = new System.Drawing.Size(121, 20);
             this.ComboBoxCorrespondingSystem.TabIndex = 3;
+            this.ComboBoxCorrespondingSystem.SelectedIndexChanged += new System.EventHandler(this.ComboBoxCorrespondingSystem_SelectedIndexChanged);
             // 
             // DGV
             // 
@@ -101,7 +104,8 @@
             this.IsExecuted,
             this.ExecuteSQLScript,
             this.Edit,
-            this.Delete});
+            this.Delete,
+            this.SortNum});
             this.DGV.Location = new System.Drawing.Point(3, 41);
             this.DGV.Name = "DGV";
             this.DGV.ReadOnly = true;
@@ -204,6 +208,13 @@
             this.Delete.ReadOnly = true;
             this.Delete.Width = 40;
             // 
+            // SortNum
+            // 
+            this.SortNum.HeaderText = "排序号";
+            this.SortNum.Name = "SortNum";
+            this.SortNum.ReadOnly = true;
+            this.SortNum.Visible = false;
+            // 
             // UCVersionInformation
             // 
             this.Controls.Add(this.DGV);
@@ -239,5 +250,6 @@
         private System.Windows.Forms.DataGridViewLinkColumn ExecuteSQLScript;
         private System.Windows.Forms.DataGridViewLinkColumn Edit;
         private System.Windows.Forms.DataGridViewLinkColumn Delete;
+        private System.Windows.Forms.DataGridViewTextBoxColumn SortNum;
     }
 }
