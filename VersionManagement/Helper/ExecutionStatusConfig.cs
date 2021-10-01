@@ -136,6 +136,27 @@ namespace VersionManagement.Helper
         {
             return ConfigHelper.GetappSettingsSplitBySemicolon(key, split, CONFIGPATH, removeEmpty);
         }
+
+        /// <summary>
+        /// 通过主key下子key的value查对应子key
+        /// </summary>
+        /// <param name="mainKey">主key，如System</param>
+        /// <param name="split">主key中子key间的分隔符</param>
+        /// <param name="value">子key的value</param>
+        /// <returns>若子key中有匹配项，返回子key，否则返回空</returns>
+        public static string GetappSettingsKeyByValue(string mainKey, char split, string value)
+        {
+            List<string> mainKeyValue = GetappSettingsSplitBySemicolon(mainKey, split);
+            foreach (var item in mainKeyValue)
+            {
+                string temp = GetappSettings(item);
+                if (temp == value)
+                {
+                    return item;
+                }
+            }
+            return "";
+        }
         #endregion
     }
 }
