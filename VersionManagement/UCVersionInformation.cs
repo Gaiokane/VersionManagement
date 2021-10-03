@@ -67,6 +67,7 @@ namespace VersionManagement
         private void BindComboBoxCorrespondingSystem()
         {
             ComboBoxCorrespondingSystem.Items.Clear();
+            ComboBoxCorrespondingSystem.Items.Add("全部");
             List<string> list;
             list = VersionConfig.GetappSettingsSplitBySemicolon("System", ';');
             //将list中元素倒叙
@@ -146,74 +147,96 @@ namespace VersionManagement
             string VersionNumber = ComboBoxVersionNumber.SelectedItem.ToString();
             //对应系统，去掉前缀
             //string CorrespondingSystem = "Base";
-            string findValue = "";
+            List<string> CorrespondingSystemList = new List<string>();
             if (ComboBoxCorrespondingSystem.Items.Count > 0)
             {
-                findValue = ComboBoxCorrespondingSystem.SelectedItem.ToString();
+                CorrespondingSystemList.Add(ComboBoxCorrespondingSystem.SelectedItem.ToString());
             }
-            //获取对应系统下拉框所选项对应的key
-            string SystemKey = VersionConfig.GetappSettingsKeyByValue("System", ';', findValue);
-            string CorrespondingSystem = "";
-            if (!string.IsNullOrEmpty(SystemKey))
+            if (CorrespondingSystemList.Count > 0 && CorrespondingSystemList[0] == "全部")
             {
-                CorrespondingSystem = SystemKey.Split('_')[1];
-            }
-
-            //选择版本号+某一个系统
-            List<string> list;
-            list = VersionConfig.GetappSettingsSplitBySemicolon("Detail_" + VersionNumber + "_" + CorrespondingSystem, ';');
-            //所选版本对应系统有版本信息
-            if (list.Count > 0)
-            {
-                DGV.Rows.Add(list.Count);
-                for (int i = 0; i < list.Count; i++)
+                CorrespondingSystemList.Clear();
+                foreach (var item in ComboBoxCorrespondingSystem.Items)
                 {
-                    List<string> detailslist = VersionConfig.GetappSettingsSplitBySemicolon(list[i], ';', false);
-                    //序号，按排序号排序后序号会乱，后面重新渲染
-                    //DGV.Rows[i].Cells["No"].Value = i + 1;
-                    //对应系统
-                    DGV.Rows[i].Cells["CorrespondingSystem"].Value = VersionConfig.GetappSettings(SystemKey);
-                    //类型
-                    DGV.Rows[i].Cells["Type"].Value = VersionConfig.GetappSettings(detailslist[0]);
-                    //排序号，列表隐藏，用作数据排序
-                    DGV.Rows[i].Cells["SortNum"].Value = detailslist[1];
-                    //发布内容
-                    DGV.Rows[i].Cells["PublishContent"].Value = detailslist[2];
-                    //详细描述
-                    DGV.Rows[i].Cells["Description"].Value = detailslist[3];
-                    //备注
-                    DGV.Rows[i].Cells["Remark"].Value = detailslist[4];
-                    //对应数据库
-                    DGV.Rows[i].Cells["CorrespondingDatabase"].Value = detailslist[5];
-                    //SQL脚本
-                    DGV.Rows[i].Cells["SQLScriptPath"].Value = detailslist[6];
-                    //是否已执行
-                    string executionStatus = ExecutionStatusConfig.GetappSettings("ExecutionStatus_" + list[i]);
-                    if (string.IsNullOrEmpty(executionStatus))
+                    CorrespondingSystemList.Add(item.ToString());
+                }
+                CorrespondingSystemList.Remove("全部");
+            }
+            foreach (var findValue in CorrespondingSystemList)
+            {
+                //获取对应系统下拉框所选项对应的key
+                string SystemKey = VersionConfig.GetappSettingsKeyByValue("System", ';', findValue);
+                string CorrespondingSystem = "";
+                if (!string.IsNullOrEmpty(SystemKey))
+                {
+                    CorrespondingSystem = SystemKey.Split('_')[1];
+                }
+
+                //选择版本号+某一个系统
+                List<string> list;
+                list = VersionConfig.GetappSettingsSplitBySemicolon("Detail_" + VersionNumber + "_" + CorrespondingSystem, ';');
+                //所选版本对应系统有版本信息
+                if (list.Count > 0)
+                {
+                    DGV.Rows.Add(list.Count);
+                    int checkCount = 0;
+                    if (DGV.Rows.Count == list.Count)
                     {
-                        DGV.Rows[i].Cells["IsExecuted"].Value = false;
-                    }
-                    else if (executionStatus.Split(';')[0] == "1")
-                    {
-                        DGV.Rows[i].Cells["IsExecuted"].Value = true;
+                        checkCount = 0;
                     }
                     else
                     {
-                        DGV.Rows[i].Cells["IsExecuted"].Value = false;
+                        checkCount = DGV.Rows.Count - list.Count;
                     }
-                    //执行按钮文字
-                    DGV.Rows[i].Cells["ExecuteSQLScript"].Value = "执行";
-                    //编辑按钮文字
-                    DGV.Rows[i].Cells["Edit"].Value = "编辑";
-                    //删除按钮文字
-                    DGV.Rows[i].Cells["Delete"].Value = "删除";
-                }
-                //列表按排序号降序显示
-                DGV.Sort(DGV.Columns["SortNum"], ListSortDirection.Descending);
-                //排序后对序号列重新渲染
-                for (int i = 0; i < DGV.Rows.Count; i++)
-                {
-                    DGV.Rows[i].Cells["No"].Value = i + 1;
+                    for (int i = 0; i < list.Count; i++)
+                    {
+                        List<string> detailslist = VersionConfig.GetappSettingsSplitBySemicolon(list[i], ';', false);
+                        //序号，按排序号排序后序号会乱，后面重新渲染
+                        //DGV.Rows[i].Cells["No"].Value = i + 1;
+                        //对应系统
+                        DGV.Rows[checkCount].Cells["CorrespondingSystem"].Value = VersionConfig.GetappSettings(SystemKey);
+                        //类型
+                        DGV.Rows[checkCount].Cells["Type"].Value = VersionConfig.GetappSettings(detailslist[0]);
+                        //排序号，列表隐藏，用作数据排序
+                        DGV.Rows[checkCount].Cells["SortNum"].Value = detailslist[1];
+                        //发布内容
+                        DGV.Rows[checkCount].Cells["PublishContent"].Value = detailslist[2];
+                        //详细描述
+                        DGV.Rows[checkCount].Cells["Description"].Value = detailslist[3];
+                        //备注
+                        DGV.Rows[checkCount].Cells["Remark"].Value = detailslist[4];
+                        //对应数据库
+                        DGV.Rows[checkCount].Cells["CorrespondingDatabase"].Value = detailslist[5];
+                        //SQL脚本
+                        DGV.Rows[checkCount].Cells["SQLScriptPath"].Value = detailslist[6];
+                        //是否已执行
+                        string executionStatus = ExecutionStatusConfig.GetappSettings("ExecutionStatus_" + list[i]);
+                        if (string.IsNullOrEmpty(executionStatus))
+                        {
+                            DGV.Rows[checkCount].Cells["IsExecuted"].Value = false;
+                        }
+                        else if (executionStatus.Split(';')[0] == "1")
+                        {
+                            DGV.Rows[checkCount].Cells["IsExecuted"].Value = true;
+                        }
+                        else
+                        {
+                            DGV.Rows[checkCount].Cells["IsExecuted"].Value = false;
+                        }
+                        //执行按钮文字
+                        DGV.Rows[checkCount].Cells["ExecuteSQLScript"].Value = "执行";
+                        //编辑按钮文字
+                        DGV.Rows[checkCount].Cells["Edit"].Value = "编辑";
+                        //删除按钮文字
+                        DGV.Rows[checkCount].Cells["Delete"].Value = "删除";
+                        checkCount++;
+                    }
+                    //列表按排序号降序显示
+                    DGV.Sort(DGV.Columns["SortNum"], ListSortDirection.Descending);
+                    //排序后对序号列重新渲染
+                    for (int i = 0; i < DGV.Rows.Count; i++)
+                    {
+                        DGV.Rows[i].Cells["No"].Value = i + 1;
+                    }
                 }
             }
             #endregion
