@@ -13,6 +13,10 @@ namespace VersionManagement
 {
     public partial class UCVersionInformation : UserControl
     {
+        //窗体传值 FormMain FormMain_Load
+        //窗体传值 FormMain 版本信息ToolStripMenuItem_Click
+        public Panel panel = new Panel();
+
         public UCVersionInformation()
         {
             InitializeComponent();
@@ -20,14 +24,14 @@ namespace VersionManagement
 
         private void UCVersionInformation_Load(object sender, EventArgs e)
         {
-            //版本号下拉框修改样式
+            //版本号 下拉框修改样式
             ComboBoxVersionNumber.DropDownStyle = ComboBoxStyle.DropDownList;
-            //对应系统下拉框修改样式
+            //对应系统 下拉框修改样式
             ComboBoxCorrespondingSystem.DropDownStyle = ComboBoxStyle.DropDownList;
 
-            //重新绑定版本号下拉框数据
+            //重新绑定 版本号 下拉框数据
             BindComboBoxVersionNumber();
-            //重新绑定对应系统下拉框数据
+            //重新绑定 对应系统 下拉框数据
             BindComboBoxCorrespondingSystem();
 
             //DGV表头居中
@@ -356,7 +360,20 @@ namespace VersionManagement
             //编辑
             if (e.ColumnIndex == 10)
             {
-                MessageBox.Show("编辑\r\n序号：" + DGV.Rows[e.RowIndex].Cells[0].Value + "\r\n对应系统：" + DGV.Rows[e.RowIndex].Cells[1].Value);
+                //MessageBox.Show("编辑\r\n序号：" + DGV.Rows[e.RowIndex].Cells[0].Value + "\r\n对应系统：" + DGV.Rows[e.RowIndex].Cells[1].Value);
+                UCAddEditVersionInformation uc = new UCAddEditVersionInformation();
+                uc.VERSIONNUMBER = ComboBoxVersionNumber.SelectedItem.ToString();
+                uc.CORRESPONDINGSYSTEM = DGV.Rows[e.RowIndex].Cells[1].Value.ToString();
+                uc.TYPE = DGV.Rows[e.RowIndex].Cells[2].Value.ToString();
+                uc.ORDERNUM = DGV.Rows[e.RowIndex].Cells["SortNum"].Value.ToString();
+                uc.PUBLISHCONTENT = DGV.Rows[e.RowIndex].Cells[3].Value.ToString();
+                uc.DESCRIPTION = DGV.Rows[e.RowIndex].Cells[4].Value.ToString();
+                uc.REMARK = DGV.Rows[e.RowIndex].Cells[5].Value.ToString();
+                uc.CORRESPONDINGDATABASE = DGV.Rows[e.RowIndex].Cells[6].Value.ToString();
+                uc.SQLSCRIPTPATH = DGV.Rows[e.RowIndex].Cells[7].Value.ToString();
+                uc.ACTION = 1;
+                panel.Controls.Clear();
+                panel.Controls.Add(uc);
             }
             //删除
             if (e.ColumnIndex == 11)

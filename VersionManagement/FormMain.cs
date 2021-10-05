@@ -47,7 +47,10 @@ namespace VersionManagement
             //初始化加载用户控件
             panel1.Controls.Clear();
             //UCTest uc = new UCTest();
-            UCVersionInformation uc = new UCVersionInformation();
+            UCVersionInformation uc = new UCVersionInformation
+            {
+                panel = this.panel1
+            };
             panel1.Controls.Add(uc);
         }
 
@@ -59,14 +62,20 @@ namespace VersionManagement
         private void 版本信息ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             panel1.Controls.Clear();
-            UCVersionInformation uc = new UCVersionInformation();
+            UCVersionInformation uc = new UCVersionInformation
+            {
+                panel = this.panel1
+            };
             panel1.Controls.Add(uc);
         }
 
         private void 新增版本信息ToolStripMenuItem_Click(object sender, EventArgs e)
         {
             panel1.Controls.Clear();
-            UCAddEditVersionInformation uc = new UCAddEditVersionInformation();
+            UCAddEditVersionInformation uc = new UCAddEditVersionInformation
+            {
+                ACTION = 0
+            };
             panel1.Controls.Add(uc);
         }
 
