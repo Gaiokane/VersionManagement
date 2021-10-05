@@ -66,15 +66,36 @@ namespace VersionManagement
         /// </summary>
         private void BindComboBoxCorrespondingSystem()
         {
+            //获取全部系统类型
+            /*
             ComboBoxCorrespondingSystem.Items.Clear();
             ComboBoxCorrespondingSystem.Items.Add("全部");
-            List<string> list;
-            list = VersionConfig.GetappSettingsSplitBySemicolon("System", ';');
+            List<string> list = VersionConfig.GetappSettingsSplitBySemicolon("System", ';');
             //将list中元素倒叙
             list.Reverse();
             foreach (var item in list)
             {
                 ComboBoxCorrespondingSystem.Items.Add(VersionConfig.GetappSettingsSplitBySemicolon(item, ';')[0]);
+            }
+            if (ComboBoxCorrespondingSystem.Items.Count > 0)
+            {
+                ComboBoxCorrespondingSystem.SelectedIndex = 0;
+            }
+            */
+
+            //获取所选版本号对应系统类型
+            ComboBoxCorrespondingSystem.Items.Clear();
+            ComboBoxCorrespondingSystem.Items.Add("全部");
+            //获取版本号下拉框所选内容 V100
+            string selectVersionNum = ComboBoxVersionNumber.SelectedItem.ToString();
+            //版本号前面拼上Detail_查所选版本对应系统 Detail_V100
+            List<string> listversionDetail = VersionConfig.GetappSettingsSplitBySemicolon("Detail_" + selectVersionNum, ';');
+            foreach (var item in listversionDetail)
+            {
+                //获取所选版本号对应系统后缀 Air
+                string versionNumSystem = item.Split('_')[2];
+                //根据对应系统编码查询出对应系统名称，添加到下拉框
+                ComboBoxCorrespondingSystem.Items.Add(VersionConfig.GetappSettings("System_" + versionNumSystem));
             }
             if (ComboBoxCorrespondingSystem.Items.Count > 0)
             {
@@ -347,6 +368,7 @@ namespace VersionManagement
         private void ComboBoxVersionNumber_SelectedIndexChanged(object sender, EventArgs e)
         {
             BindDGV();
+            BindComboBoxCorrespondingSystem();
         }
 
         private void ComboBoxCorrespondingSystem_SelectedIndexChanged(object sender, EventArgs e)
