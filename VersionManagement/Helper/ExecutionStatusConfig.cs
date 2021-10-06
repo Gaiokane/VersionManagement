@@ -9,7 +9,7 @@ namespace VersionManagement.Helper
     class ExecutionStatusConfig
     {
         //执行状态
-        public static string ExecutionStatus;
+        public static string ExecutionStatusTemplate;
 
         //配置文件路径
         public static string CONFIGPATH = "./ExecutionStatus";
@@ -32,7 +32,7 @@ namespace VersionManagement.Helper
         /// </summary>
         public static void GetAllDefaultappSettings()
         {
-            ExecutionStatus = ConfigHelper.GetappSettings("ExecutionStatus", CONFIGPATH);
+            ExecutionStatusTemplate = ConfigHelper.GetappSettings("ExecutionStatus_Detail_V5.0.0_Base_1", CONFIGPATH);
         }
         #endregion
 
@@ -42,9 +42,9 @@ namespace VersionManagement.Helper
         /// </summary>
         public static void SetDefaultSettingsIfIsNullOrEmpty()
         {
-            if (string.IsNullOrEmpty(ExecutionStatus))
+            if (string.IsNullOrEmpty(ExecutionStatusTemplate))
             {
-                ConfigHelper.AddappSettings("ExecutionStatus", @"ExecutionStatus;", CONFIGPATH);
+                ConfigHelper.AddappSettings("ExecutionStatus_Detail_V5.0.0_Base_1", @"1;1", CONFIGPATH);
             }
         }
         #endregion

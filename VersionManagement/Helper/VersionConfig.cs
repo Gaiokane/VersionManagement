@@ -24,10 +24,18 @@ namespace VersionManagement.Helper
         public static string Type_Optimization;
         //类型配置_新增
         public static string Type_New;
-        //版本详情
+        //版本详情_模板
         public static string Details;
         //版本详情_V5.0.0
-        public static string Details_V5_0_0;
+        public static string Detail_V5_0_0;
+        //版本详情_V5.0.0_基础_Ids
+        public static string Detail_V5_0_0_Base_Ids;
+        //版本详情_V5.0.0_基础
+        public static string Detail_V5_0_0_Base;
+        //版本详情_V5.0.0_基础_1
+        public static string Detail_V5_0_0_Base_1;
+        //版本详情_V5.0.0_基础_2
+        public static string Detail_V5_0_0_Base_2;
 
         //配置文件路径
         public static string CONFIGPATH = "./Version";
@@ -59,7 +67,11 @@ namespace VersionManagement.Helper
             Type_Optimization = ConfigHelper.GetappSettings("Type_Optimization", CONFIGPATH);
             Type_New = ConfigHelper.GetappSettings("Type_New", CONFIGPATH);
             Details = ConfigHelper.GetappSettings("Details", CONFIGPATH);
-            Details_V5_0_0 = ConfigHelper.GetappSettings("Details_V5.0.0", CONFIGPATH);
+            Detail_V5_0_0 = ConfigHelper.GetappSettings("Detail_V5.0.0", CONFIGPATH);
+            Detail_V5_0_0_Base_Ids = ConfigHelper.GetappSettings("Detail_V5.0.0_Base_Ids", CONFIGPATH);
+            Detail_V5_0_0_Base = ConfigHelper.GetappSettings("Detail_V5.0.0_Base", CONFIGPATH);
+            Detail_V5_0_0_Base_1 = ConfigHelper.GetappSettings("Detail_V5.0.0_Base_1", CONFIGPATH);
+            Detail_V5_0_0_Base_2 = ConfigHelper.GetappSettings("Detail_V5.0.0_Base_2", CONFIGPATH);
         }
         #endregion
 
@@ -103,11 +115,27 @@ namespace VersionManagement.Helper
             }
             if (string.IsNullOrEmpty(Details))
             {
-                ConfigHelper.AddappSettings("Details", @"Details_V5.0.0_Base;", CONFIGPATH);
+                ConfigHelper.AddappSettings("Details", @"Detail_V5.0.0;", CONFIGPATH);
             }
-            if (string.IsNullOrEmpty(Details_V5_0_0))
+            if (string.IsNullOrEmpty(Detail_V5_0_0))
             {
-                ConfigHelper.AddappSettings("Details_V5.0.0_Base", @"Type_New;2;发布内容;详细描述;备注;Database_BaseData;E:\SQL脚本.sql;", CONFIGPATH);
+                ConfigHelper.AddappSettings("Detail_V5.0.0", @"Detail_V5.0.0_Base", CONFIGPATH);
+            }
+            if (string.IsNullOrEmpty(Detail_V5_0_0_Base_Ids))
+            {
+                ConfigHelper.AddappSettings("Detail_V5.0.0_Base_Ids", @"1", CONFIGPATH);
+            }
+            if (string.IsNullOrEmpty(Detail_V5_0_0_Base))
+            {
+                ConfigHelper.AddappSettings("Detail_V5.0.0_Base", @"Detail_V5.0.0_Base_1;Detail_V5.0.0_Base_2;", CONFIGPATH);
+            }
+            if (string.IsNullOrEmpty(Detail_V5_0_0_Base_1))
+            {
+                ConfigHelper.AddappSettings("Detail_V5.0.0_Base_1", @"Type_New;1;发布内容1;详细描述1;备注1;Database_BaseData;E:\SQL脚本1.sql;", CONFIGPATH);
+            }
+            if (string.IsNullOrEmpty(Detail_V5_0_0_Base_2))
+            {
+                ConfigHelper.AddappSettings("Detail_V5.0.0_Base_2", @"Type_BUG;2;发布内容2;详细描述2;备注2;Database_BaseData;E:\SQL脚本2.sql;", CONFIGPATH);
             }
         }
         #endregion
