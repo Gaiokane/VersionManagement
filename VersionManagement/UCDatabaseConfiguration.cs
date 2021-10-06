@@ -177,9 +177,9 @@ namespace VersionManagement
                 }
                 else
                 {
-                    bool modifyVersion = DefaultConfig.EditappSettingsAddValue("Database", "Database_" + TextBoxDatabaseCode.Text.Trim(), ';');
-                    bool addVerison = DefaultConfig.AddappSettings("Database_" + TextBoxDatabaseCode.Text.Trim(), TextBoxDatabaseName.Text.Trim() + ";");
-                    if (modifyVersion && addVerison)
+                    bool modifyData = DefaultConfig.EditappSettingsAddValue("Database", "Database_" + TextBoxDatabaseCode.Text.Trim(), ';');
+                    bool addData = DefaultConfig.AddappSettings("Database_" + TextBoxDatabaseCode.Text.Trim(), TextBoxDatabaseName.Text.Trim());
+                    if (modifyData && addData)
                     {
                         MessageBox.Show("新增成功！");
                         //恢复控件状态
@@ -193,8 +193,8 @@ namespace VersionManagement
             }
             else if (ACTION == 2)
             {
-                bool editVerison = DefaultConfig.AddappSettings("Database_" + TextBoxDatabaseCode.Text.Trim(), TextBoxDatabaseName.Text.Trim() + ";");
-                if (editVerison)
+                bool editData = DefaultConfig.AddappSettings("Database_" + TextBoxDatabaseCode.Text.Trim(), TextBoxDatabaseName.Text.Trim());
+                if (editData)
                 {
                     MessageBox.Show("编辑成功！");
                     //恢复控件状态

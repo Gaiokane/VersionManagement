@@ -174,9 +174,9 @@ namespace VersionManagement
                 }
                 else
                 {
-                    bool modifyVersion = VersionConfig.EditappSettingsAddValue("Type", "Type_" + TextBoxTypeCode.Text.Trim(), ';');
-                    bool addVerison = VersionConfig.AddappSettings("Type_" + TextBoxTypeCode.Text.Trim(), TextBoxTypeName.Text.Trim() + ";");
-                    if (modifyVersion && addVerison)
+                    bool modifyData = VersionConfig.EditappSettingsAddValue("Type", "Type_" + TextBoxTypeCode.Text.Trim(), ';');
+                    bool addData = VersionConfig.AddappSettings("Type_" + TextBoxTypeCode.Text.Trim(), TextBoxTypeName.Text.Trim());
+                    if (modifyData && addData)
                     {
                         MessageBox.Show("新增成功！");
                         //恢复控件状态
@@ -190,8 +190,8 @@ namespace VersionManagement
             }
             else if (ACTION == 2)
             {
-                bool editVerison = VersionConfig.AddappSettings("Type_" + TextBoxTypeCode.Text.Trim(), TextBoxTypeName.Text.Trim() + ";");
-                if (editVerison)
+                bool editData = VersionConfig.AddappSettings("Type_" + TextBoxTypeCode.Text.Trim(), TextBoxTypeName.Text.Trim());
+                if (editData)
                 {
                     MessageBox.Show("编辑成功！");
                     //恢复控件状态
