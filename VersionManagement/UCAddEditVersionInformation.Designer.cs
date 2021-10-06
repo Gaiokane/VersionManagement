@@ -92,6 +92,7 @@ namespace VersionManagement
             this.BtnSQLScriptPath.TabIndex = 45;
             this.BtnSQLScriptPath.Text = "...";
             this.BtnSQLScriptPath.UseVisualStyleBackColor = true;
+            this.BtnSQLScriptPath.Click += new System.EventHandler(this.BtnSQLScriptPath_Click);
             // 
             // BtnReset
             // 
@@ -111,6 +112,7 @@ namespace VersionManagement
             this.BtnSave.TabIndex = 43;
             this.BtnSave.Text = "保存";
             this.BtnSave.UseVisualStyleBackColor = true;
+            this.BtnSave.Click += new System.EventHandler(this.BtnSave_Click);
             // 
             // TextBoxSQLScriptPath
             // 

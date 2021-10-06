@@ -46,6 +46,7 @@
             this.Edit = new System.Windows.Forms.DataGridViewLinkColumn();
             this.Delete = new System.Windows.Forms.DataGridViewLinkColumn();
             this.SortNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DetailMainGuid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
             this.SuspendLayout();
             // 
@@ -105,7 +106,8 @@
             this.ExecuteSQLScript,
             this.Edit,
             this.Delete,
-            this.SortNum});
+            this.SortNum,
+            this.DetailMainGuid});
             this.DGV.Location = new System.Drawing.Point(3, 41);
             this.DGV.Name = "DGV";
             this.DGV.ReadOnly = true;
@@ -210,10 +212,17 @@
             // 
             // SortNum
             // 
-            this.SortNum.HeaderText = "排序号";
+            this.SortNum.HeaderText = "排序值";
             this.SortNum.Name = "SortNum";
             this.SortNum.ReadOnly = true;
-            this.SortNum.Visible = false;
+            this.SortNum.Width = 66;
+            // 
+            // DetailMainGuid
+            // 
+            this.DetailMainGuid.HeaderText = "版本信息唯一ID";
+            this.DetailMainGuid.Name = "DetailMainGuid";
+            this.DetailMainGuid.ReadOnly = true;
+            this.DetailMainGuid.Visible = false;
             // 
             // UCVersionInformation
             // 
@@ -251,5 +260,6 @@
         private System.Windows.Forms.DataGridViewLinkColumn Edit;
         private System.Windows.Forms.DataGridViewLinkColumn Delete;
         private System.Windows.Forms.DataGridViewTextBoxColumn SortNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DetailMainGuid;
     }
 }

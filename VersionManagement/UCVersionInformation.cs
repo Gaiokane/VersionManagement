@@ -203,7 +203,7 @@ namespace VersionManagement
                 if (list.Count > 0)
                 {
                     DGV.Rows.Add(list.Count);
-                    int checkCount = 0;
+                    int checkCount;
                     if (DGV.Rows.Count == list.Count)
                     {
                         checkCount = 0;
@@ -217,12 +217,15 @@ namespace VersionManagement
                         List<string> detailslist = VersionConfig.GetappSettingsSplitBySemicolon(list[i], ';', false);
                         //序号，按排序号排序后序号会乱，后面重新渲染
                         //DGV.Rows[i].Cells["No"].Value = i + 1;
+
+                        //版本对应系统详情key，编辑根据该字段修改对应键值对
+                        DGV.Rows[checkCount].Cells["DetailMainGuid"].Value = list[i];
                         //对应系统
                         DGV.Rows[checkCount].Cells["CorrespondingSystem"].Value = VersionConfig.GetappSettings(SystemKey);
                         //类型
                         DGV.Rows[checkCount].Cells["Type"].Value = VersionConfig.GetappSettings(detailslist[0]);
                         //排序号，列表隐藏，用作数据排序
-                        DGV.Rows[checkCount].Cells["SortNum"].Value = detailslist[1];
+                        DGV.Rows[checkCount].Cells["SortNum"].Value = Convert.ToInt32(detailslist[1]);
                         //发布内容
                         DGV.Rows[checkCount].Cells["PublishContent"].Value = detailslist[2];
                         //详细描述
@@ -230,7 +233,7 @@ namespace VersionManagement
                         //备注
                         DGV.Rows[checkCount].Cells["Remark"].Value = detailslist[4];
                         //对应数据库
-                        DGV.Rows[checkCount].Cells["CorrespondingDatabase"].Value = detailslist[5];
+                        DGV.Rows[checkCount].Cells["CorrespondingDatabase"].Value = DefaultConfig.GetappSettings(detailslist[5]);
                         //SQL脚本
                         DGV.Rows[checkCount].Cells["SQLScriptPath"].Value = detailslist[6];
                         //是否已执行
@@ -361,17 +364,20 @@ namespace VersionManagement
             if (e.ColumnIndex == 10)
             {
                 //MessageBox.Show("编辑\r\n序号：" + DGV.Rows[e.RowIndex].Cells[0].Value + "\r\n对应系统：" + DGV.Rows[e.RowIndex].Cells[1].Value);
-                UCAddEditVersionInformation uc = new UCAddEditVersionInformation();
-                uc.VERSIONNUMBER = ComboBoxVersionNumber.SelectedItem.ToString();
-                uc.CORRESPONDINGSYSTEM = DGV.Rows[e.RowIndex].Cells[1].Value.ToString();
-                uc.TYPE = DGV.Rows[e.RowIndex].Cells[2].Value.ToString();
-                uc.ORDERNUM = DGV.Rows[e.RowIndex].Cells["SortNum"].Value.ToString();
-                uc.PUBLISHCONTENT = DGV.Rows[e.RowIndex].Cells[3].Value.ToString();
-                uc.DESCRIPTION = DGV.Rows[e.RowIndex].Cells[4].Value.ToString();
-                uc.REMARK = DGV.Rows[e.RowIndex].Cells[5].Value.ToString();
-                uc.CORRESPONDINGDATABASE = DGV.Rows[e.RowIndex].Cells[6].Value.ToString();
-                uc.SQLSCRIPTPATH = DGV.Rows[e.RowIndex].Cells[7].Value.ToString();
-                uc.ACTION = 1;
+                UCAddEditVersionInformation uc = new UCAddEditVersionInformation
+                {
+                    DETAILMAINGUID = DGV.Rows[e.RowIndex].Cells["DetailMainGuid"].Value.ToString(),
+                    VERSIONNUMBER = ComboBoxVersionNumber.SelectedItem.ToString(),
+                    CORRESPONDINGSYSTEM = DGV.Rows[e.RowIndex].Cells[1].Value.ToString(),
+                    TYPE = DGV.Rows[e.RowIndex].Cells[2].Value.ToString(),
+                    ORDERNUM = DGV.Rows[e.RowIndex].Cells["SortNum"].Value.ToString(),
+                    PUBLISHCONTENT = DGV.Rows[e.RowIndex].Cells[3].Value.ToString(),
+                    DESCRIPTION = DGV.Rows[e.RowIndex].Cells[4].Value.ToString(),
+                    REMARK = DGV.Rows[e.RowIndex].Cells[5].Value.ToString(),
+                    CORRESPONDINGDATABASE = DGV.Rows[e.RowIndex].Cells[6].Value.ToString(),
+                    SQLSCRIPTPATH = DGV.Rows[e.RowIndex].Cells[7].Value.ToString(),
+                    ACTION = 1
+                };
                 panel.Controls.Clear();
                 panel.Controls.Add(uc);
             }
