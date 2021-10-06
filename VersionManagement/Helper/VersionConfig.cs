@@ -124,6 +124,18 @@ namespace VersionManagement.Helper
         }
 
         /// <summary>
+        /// 指定Key的Value按指定字符分割，遍历是否存在指定字符串
+        /// </summary>
+        /// <param name="key">appSettings键</param>
+        /// <param name="split">value中分隔符</param>
+        /// <param name="checkvalue">需要查找到的value</param>
+        /// <returns>true, false</returns>
+        public static bool IsappSettingsValueExistsBySemicolon(string key, char split, string checkvalue)
+        {
+            return ConfigHelper.IsappSettingsValueExistsBySemicolon(key, split, checkvalue, CONFIGPATH);
+        }
+
+        /// <summary>
         /// 配置文件中新增键值对
         /// </summary>
         /// <param name="key"></param>

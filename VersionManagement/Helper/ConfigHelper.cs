@@ -29,6 +29,33 @@ namespace VersionManagement.Helper
         }
         #endregion
 
+        #region 指定Key的Value按指定字符分割，遍历是否存在指定字符串
+        /// <summary>
+        /// 指定Key的Value按指定字符分割，遍历是否存在指定字符串
+        /// </summary>
+        /// <param name="key">appSettings键</param>
+        /// <param name="split">value中分隔符</param>
+        /// <param name="checkvalue">需要查找到的value</param>
+        /// <param name="configpath">配置文件</param>
+        /// <returns>true, false</returns>
+        public static bool IsappSettingsValueExistsBySemicolon(string key, char split, string checkvalue, string configpath)
+        {
+            List<string> list = GetappSettingsSplitBySemicolon(key, split, configpath);
+            foreach (var item in list)
+            {
+                if (item == checkvalue)
+                {
+                    return true;
+                }
+                else
+                {
+                    break;
+                }
+            }
+            return false;
+        }
+        #endregion
+
         #region 新增appSettings配置
         /// <summary>
         /// 新增appSettings配置
