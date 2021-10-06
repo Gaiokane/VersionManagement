@@ -33,7 +33,7 @@ namespace VersionManagement
             string rootPath = Environment.CurrentDirectory;
             FileStream fileStream;
             //版本配置文件对应文件的初始化
-            fileStream = File.Create(rootPath + "\\Version");
+            _ = File.Create(rootPath + "\\Version");
             //版本配置文件对应文件的初始化
             fileStream = File.Create(rootPath + "\\ExecutionStatus");
             fileStream.Close();
