@@ -198,7 +198,8 @@ namespace VersionManagement
 
                 //选择版本号+某一个系统
                 List<string> list;
-                list = VersionConfig.GetappSettingsSplitBySemicolon("Detail_" + VersionNumber + "_" + CorrespondingSystem, ';');
+                string detailVersionSystem = "Detail_" + VersionNumber + "_" + CorrespondingSystem;
+                list = VersionConfig.GetappSettingsSplitBySemicolon(detailVersionSystem, ';');
                 //所选版本对应系统有版本信息
                 if (list.Count > 0)
                 {
@@ -220,6 +221,8 @@ namespace VersionManagement
 
                         //版本对应系统详情key，编辑根据该字段修改对应键值对
                         DGV.Rows[checkCount].Cells["DetailMainGuid"].Value = list[i];
+                        //版本对应系统key，根据该字段删除对应值
+                        DGV.Rows[checkCount].Cells["DetailVersionSystem"].Value = detailVersionSystem;
                         //对应系统
                         DGV.Rows[checkCount].Cells["CorrespondingSystem"].Value = VersionConfig.GetappSettings(SystemKey);
                         //类型
@@ -384,7 +387,24 @@ namespace VersionManagement
             //删除
             if (e.ColumnIndex == 11)
             {
-                MessageBox.Show("删除\r\n序号：" + DGV.Rows[e.RowIndex].Cells[0].Value + "\r\n对应系统：" + DGV.Rows[e.RowIndex].Cells[1].Value);
+                //MessageBox.Show("删除\r\n序号：" + DGV.Rows[e.RowIndex].Cells[0].Value + "\r\n对应系统：" + DGV.Rows[e.RowIndex].Cells[1].Value);
+                if (DialogResult.OK == MessageBox.Show(
+                    "对应系统：" + DGV.Rows[e.RowIndex].Cells["CorrespondingSystem"].Value.ToString() +
+                    "\r\n类型：" + DGV.Rows[e.RowIndex].Cells["Type"].Value.ToString() +
+                    "\r\n发布内容：" + DGV.Rows[e.RowIndex].Cells["PublishContent"].Value.ToString(),
+                    "确认删除该项？", MessageBoxButtons.OKCancel))
+                {
+                    if (VersionConfig.DelappSettingsByValue(DGV.Rows[e.RowIndex].Cells["DetailVersionSystem"].Value.ToString(), DGV.Rows[e.RowIndex].Cells["DetailMainGuid"].Value.ToString(), ';'))
+                    {
+                        MessageBox.Show("删除成功！");
+                        BindDGV();
+                    }
+                    else
+                    {
+                        MessageBox.Show("删除失败！");
+                        BindDGV();
+                    }
+                }
             }
         }
 

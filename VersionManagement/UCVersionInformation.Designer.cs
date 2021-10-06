@@ -46,6 +46,7 @@
             this.Edit = new System.Windows.Forms.DataGridViewLinkColumn();
             this.Delete = new System.Windows.Forms.DataGridViewLinkColumn();
             this.SortNum = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.DetailVersionSystem = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.DetailMainGuid = new System.Windows.Forms.DataGridViewTextBoxColumn();
             ((System.ComponentModel.ISupportInitialize)(this.DGV)).BeginInit();
             this.SuspendLayout();
@@ -107,6 +108,7 @@
             this.Edit,
             this.Delete,
             this.SortNum,
+            this.DetailVersionSystem,
             this.DetailMainGuid});
             this.DGV.Location = new System.Drawing.Point(3, 41);
             this.DGV.Name = "DGV";
@@ -217,6 +219,14 @@
             this.SortNum.ReadOnly = true;
             this.SortNum.Width = 66;
             // 
+            // DetailVersionSystem
+            // 
+            this.DetailVersionSystem.HeaderText = "版本系统键名";
+            this.DetailVersionSystem.Name = "DetailVersionSystem";
+            this.DetailVersionSystem.ReadOnly = true;
+            this.DetailVersionSystem.Visible = false;
+            this.DetailVersionSystem.Width = 140;
+            // 
             // DetailMainGuid
             // 
             this.DetailMainGuid.HeaderText = "版本信息唯一ID";
@@ -260,6 +270,7 @@
         private System.Windows.Forms.DataGridViewLinkColumn Edit;
         private System.Windows.Forms.DataGridViewLinkColumn Delete;
         private System.Windows.Forms.DataGridViewTextBoxColumn SortNum;
+        private System.Windows.Forms.DataGridViewTextBoxColumn DetailVersionSystem;
         private System.Windows.Forms.DataGridViewTextBoxColumn DetailMainGuid;
     }
 }
