@@ -51,6 +51,10 @@ namespace VersionManagement
             {
                 panel = this.panel1
             };
+            uc.Dock = DockStyle.Fill;
+            panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
             panel1.Controls.Add(uc);
         }
 
@@ -66,6 +70,7 @@ namespace VersionManagement
             {
                 panel = this.panel1
             };
+            uc.Dock = DockStyle.Fill;
             panel1.Controls.Add(uc);
         }
 

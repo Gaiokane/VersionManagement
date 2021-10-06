@@ -39,6 +39,11 @@ namespace VersionManagement
             //DGV内容居中
             DGV.RowsDefaultCellStyle.Alignment = DataGridViewContentAlignment.MiddleCenter;
 
+            //配合FormMain FormMain_Load/版本信息ToolStripMenuItem_Click uc.Dock/panel1.Anchor 使用，DGV跟随窗体大小动态变动
+            DGV.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+            | System.Windows.Forms.AnchorStyles.Left)
+            | System.Windows.Forms.AnchorStyles.Right)));
+
             BindDGV();
         }
 
