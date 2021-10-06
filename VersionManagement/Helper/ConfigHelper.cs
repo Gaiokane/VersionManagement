@@ -47,10 +47,6 @@ namespace VersionManagement.Helper
                 {
                     return true;
                 }
-                else
-                {
-                    break;
-                }
             }
             return false;
         }
