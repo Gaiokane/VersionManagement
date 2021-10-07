@@ -366,7 +366,65 @@ namespace VersionManagement
             //执行
             if (e.ColumnIndex == 9)
             {
-                MessageBox.Show("执行\r\n序号：" + DGV.Rows[e.RowIndex].Cells[0].Value + "\r\n对应系统：" + DGV.Rows[e.RowIndex].Cells[1].Value);
+                //MessageBox.Show("执行\r\n序号：" + DGV.Rows[e.RowIndex].Cells[0].Value + "\r\n对应系统：" + DGV.Rows[e.RowIndex].Cells[1].Value);
+
+                //获取程序根目录
+                string rootPath = Environment.CurrentDirectory;
+                //获取DGV中的SQL脚本名称
+                string DGVSQLScriptPath = DGV.Rows[e.RowIndex].Cells["SQLScriptPath"].Value.ToString();
+                //获取DGV中的对应数据库名称
+                string CorrespondingDatabase = DGV.Rows[e.RowIndex].Cells["CorrespondingDatabase"].Value.ToString();
+                //拼接SQL脚本完整路径
+                string SQLScriptPath = rootPath + "\\SQLScripts\\" + DGVSQLScriptPath;
+
+                //没有要执行的脚本
+                if (string.IsNullOrEmpty(DGVSQLScriptPath))
+                {
+                    MessageBox.Show("没有要执行的脚本", "提示", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                }
+                //有脚本可执行
+                else
+                {
+                    string executedKey = "ExecutionStatus_" + DGV.Rows[e.RowIndex].Cells["DetailMainGuid"].Value.ToString();
+                    List<string> DBConn = DefaultConfig.GetappSettingsSplitBySemicolon("DatabaseConn", ';');
+                    string executeCmd = @".\SQLCMD.EXE -S " + DBConn[0] + " -U " + DBConn[1] + " -P " + DBConn[2] + " -d " + CorrespondingDatabase + " -i " + SQLScriptPath;
+                    //已执行
+                    if (DGV.Rows[e.RowIndex].Cells["IsExecuted"].Value.ToString() == "True")
+                    {
+                        string executedCount = ExecutionStatusConfig.GetappSettingsSplitBySemicolon(executedKey, ';')[1];
+                        if (DialogResult.OK == MessageBox.Show("该脚本已执行过 " + executedCount + " 次，是否再次执行？", "确认执行？", MessageBoxButtons.OKCancel))
+                        {
+                            //执行
+                            string RunCmdResult = CMDHelper.RunCmd(rootPath, executeCmd);
+                            if (string.IsNullOrEmpty(RunCmdResult) && ExecutionStatusConfig.EditappSettings(executedKey, "1;" + (Convert.ToInt32(executedCount) + 1).ToString()))
+                            {
+                                MessageBox.Show("执行成功！");
+                            }
+                            else
+                            {
+                                MessageBox.Show("执行失败！\r\n" + RunCmdResult);
+                            }
+                        }
+                    }
+                    //未执行
+                    else
+                    {
+                        if (DialogResult.OK == MessageBox.Show("确认执行该脚本？", "确认执行？", MessageBoxButtons.OKCancel))
+                        {
+                            //执行
+                            string RunCmdResult = CMDHelper.RunCmd(rootPath, executeCmd);
+                            if (string.IsNullOrEmpty(RunCmdResult) && ExecutionStatusConfig.AddappSettings(executedKey, "1;1"))
+                            {
+                                MessageBox.Show("执行成功！");
+                            }
+                            else
+                            {
+                                MessageBox.Show("执行失败！\r\n" + RunCmdResult);
+                            }
+                        }
+                    }
+                    BindDGV();
+                }
             }
             //编辑
             if (e.ColumnIndex == 10)
@@ -402,13 +460,12 @@ namespace VersionManagement
                     if (VersionConfig.DelappSettingsByValue(DGV.Rows[e.RowIndex].Cells["DetailVersionSystem"].Value.ToString(), DGV.Rows[e.RowIndex].Cells["DetailMainGuid"].Value.ToString(), ';'))
                     {
                         MessageBox.Show("删除成功！");
-                        BindDGV();
                     }
                     else
                     {
                         MessageBox.Show("删除失败！");
-                        BindDGV();
                     }
+                    BindDGV();
                 }
             }
         }
