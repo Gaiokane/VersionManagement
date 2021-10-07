@@ -37,6 +37,8 @@ namespace VersionManagement
             //版本配置文件对应文件的初始化
             fileStream = File.Create(rootPath + "\\ExecutionStatus");
             fileStream.Close();
+            //SQL脚本文件夹的初始化
+            FileHelper.CreateNewDirectory(rootPath + "\\SQLScripts");
 
             //版本配置文件初始化
             VersionConfig.Init();

@@ -270,6 +270,12 @@ namespace VersionManagement
                 //拼接所选版本对应系统Ids的新Key
                 string newdetailmainguid = detailmainkey + "_" + newIds.ToString();
 
+                //获取SQL脚本路径中的文件名
+                string[] arrSQLScriptPath = TextBoxSQLScriptPath.Text.Trim().Split('\\');
+                string SQLScriptPath = arrSQLScriptPath[arrSQLScriptPath.Length - 1];
+                //将所选SQL脚本文件复制到程序根目录下的目录SQLScripts中
+                FileHelper.CopyFileTo(TextBoxSQLScriptPath.Text.Trim(), Environment.CurrentDirectory + "\\SQLScripts\\" + SQLScriptPath);
+
                 //value中内容以;隔开
                 string addValue =
                     //第一项为类型（存编码）
@@ -285,13 +291,12 @@ namespace VersionManagement
                     //第六项为对应数据库（存编码）
                     DefaultConfig.GetappSettingsKeyByValue("Database", ';', ComboBoxCorrespondingDatabase.SelectedItem.ToString()) + ";" +
                     //第七项为SQL脚本
-                    TextBoxSQLScriptPath.Text.Trim() + ";";
+                    SQLScriptPath + ";";
 
-                bool addDetails;
                 //Details中不存在Detail_版本号，则新增
                 if (!VersionConfig.IsappSettingsValueExistsBySemicolon("Details", ';', detailversion))
                 {
-                    addDetails = VersionConfig.EditappSettingsAddValue("Details", detailversion, ';');
+                    VersionConfig.EditappSettingsAddValue("Details", detailversion, ';');
                 }
 
                 bool addDetailVersion;
@@ -348,6 +353,12 @@ namespace VersionManagement
             {
                 //MessageBox.Show(DETAILMAINGUID);
 
+                //获取SQL脚本路径中的文件名
+                string[] arrSQLScriptPath = TextBoxSQLScriptPath.Text.Trim().Split('\\');
+                string SQLScriptPath = arrSQLScriptPath[arrSQLScriptPath.Length - 1];
+                //将所选SQL脚本文件复制到程序根目录下的目录SQLScripts中
+                FileHelper.CopyFileTo(TextBoxSQLScriptPath.Text.Trim(), Environment.CurrentDirectory + "\\SQLScripts\\" + SQLScriptPath);
+
                 //value中内容以;隔开
                 string editValue =
                     //第一项为类型（存编码）
@@ -363,7 +374,7 @@ namespace VersionManagement
                     //第六项为对应数据库（存编码）
                     DefaultConfig.GetappSettingsKeyByValue("Database", ';', ComboBoxCorrespondingDatabase.SelectedItem.ToString()) + ";" +
                     //第七项为SQL脚本
-                    TextBoxSQLScriptPath.Text.Trim() + ";";
+                    SQLScriptPath + ";";
                 bool editDetail = VersionConfig.AddappSettings(DETAILMAINGUID, editValue);
                 if (editDetail)
                 {
