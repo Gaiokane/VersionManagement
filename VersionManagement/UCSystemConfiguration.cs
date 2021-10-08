@@ -157,52 +157,59 @@ namespace VersionManagement
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            //0=初始化，1=新增，2=编辑
-            if (ACTION == 1)
+            if (!(CheckHelper.IsStringContainsUnderscoreSemicolon(TextBoxSystemCode.Text.Trim()) && CheckHelper.IsStringContainsUnderscoreSemicolon(TextBoxSystemName.Text.Trim())))
             {
-                //<add key="System" value="System_Base;System_Air;" />
-                //<add key="System_Base" value="基础" />
-                //获取所有System
-                List<string> temp = VersionConfig.GetappSettingsSplitBySemicolon("System", ';');
-                //校验重复
-                if (temp.Contains("System_" + TextBoxSystemCode.Text.Trim()))
+                MessageBox.Show(CheckHelper.messageUnderscoreSemicolon);
+            }
+            else
+            {
+                //0=初始化，1=新增，2=编辑
+                if (ACTION == 1)
                 {
-                    MessageBox.Show("已存在相同系统编码，请确认！");
-                    TextBoxSystemCode.SelectAll();
-                    TextBoxSystemCode.Focus();
-                }
-                else
-                {
-                    bool modifyData = VersionConfig.EditappSettingsAddValue("System", "System_" + TextBoxSystemCode.Text.Trim(), ';');
-                    bool addData = VersionConfig.AddappSettings("System_" + TextBoxSystemCode.Text.Trim(), TextBoxSystemName.Text.Trim());
-                    if (modifyData && addData)
+                    //<add key="System" value="System_Base;System_Air;" />
+                    //<add key="System_Base" value="基础" />
+                    //获取所有System
+                    List<string> temp = VersionConfig.GetappSettingsSplitBySemicolon("System", ';');
+                    //校验重复
+                    if (temp.Contains("System_" + TextBoxSystemCode.Text.Trim()))
                     {
-                        MessageBox.Show("新增成功！");
+                        MessageBox.Show("已存在相同系统编码，请确认！");
+                        TextBoxSystemCode.SelectAll();
+                        TextBoxSystemCode.Focus();
+                    }
+                    else
+                    {
+                        bool modifyData = VersionConfig.EditappSettingsAddValue("System", "System_" + TextBoxSystemCode.Text.Trim(), ';');
+                        bool addData = VersionConfig.AddappSettings("System_" + TextBoxSystemCode.Text.Trim(), TextBoxSystemName.Text.Trim());
+                        if (modifyData && addData)
+                        {
+                            MessageBox.Show("新增成功！");
+                            //恢复控件状态
+                            SetAddEditControlState(0);
+                        }
+                        else
+                        {
+                            MessageBox.Show("新增失败！");
+                        }
+                    }
+                }
+                else if (ACTION == 2)
+                {
+                    bool editData = VersionConfig.AddappSettings("System_" + TextBoxSystemCode.Text.Trim(), TextBoxSystemName.Text.Trim());
+                    if (editData)
+                    {
+                        MessageBox.Show("编辑成功！");
                         //恢复控件状态
                         SetAddEditControlState(0);
                     }
                     else
                     {
-                        MessageBox.Show("新增失败！");
+                        MessageBox.Show("编辑失败！");
                     }
-                }
-            }
-            else if (ACTION == 2)
-            {
-                bool editData = VersionConfig.AddappSettings("System_" + TextBoxSystemCode.Text.Trim(), TextBoxSystemName.Text.Trim());
-                if (editData)
-                {
-                    MessageBox.Show("编辑成功！");
-                    //恢复控件状态
-                    SetAddEditControlState(0);
-                }
-                else
-                {
-                    MessageBox.Show("编辑失败！");
-                }
 
+                }
+                BindDGV();
             }
-            BindDGV();
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)

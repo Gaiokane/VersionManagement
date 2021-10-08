@@ -170,52 +170,59 @@ namespace VersionManagement
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            //0=初始化，1=新增，2=编辑
-            if (ACTION == 1)
+            if (!(CheckHelper.IsStringContainsUnderscoreSemicolon(TextBoxVersionNumber.Text.Trim()) && CheckHelper.IsStringContainsUnderscoreSemicolon(RichTextBoxVersionDescription.Text.Trim())))
             {
-                //< add key = "Version" value = "Version_V5.0.0;Version_V5.0.1" />
-                //< add key = "Version_V5.0.0" value = "V5.0.0初始版本;2021-07-31;" />
-                //获取所有Version
-                List<string> temp = VersionConfig.GetappSettingsSplitBySemicolon("Version", ';');
-                //校验重复
-                if (temp.Contains("Version_" + TextBoxVersionNumber.Text.Trim()))
+                MessageBox.Show(CheckHelper.messageUnderscoreSemicolon);
+            }
+            else
+            {
+                //0=初始化，1=新增，2=编辑
+                if (ACTION == 1)
                 {
-                    MessageBox.Show("已存在相同版本号，请确认！");
-                    TextBoxVersionNumber.SelectAll();
-                    TextBoxVersionNumber.Focus();
-                }
-                else
-                {
-                    bool modifyVersion = VersionConfig.EditappSettingsAddValue("Version", "Version_" + TextBoxVersionNumber.Text.Trim(), ';');
-                    bool addVerison = VersionConfig.AddappSettings("Version_" + TextBoxVersionNumber.Text.Trim(), RichTextBoxVersionDescription.Text.Trim() + ";" + DateTimePickerReleaseDate.Value.ToString("yyyy-MM-dd") + ";");
-                    if (modifyVersion && addVerison)
+                    //< add key = "Version" value = "Version_V5.0.0;Version_V5.0.1" />
+                    //< add key = "Version_V5.0.0" value = "V5.0.0初始版本;2021-07-31;" />
+                    //获取所有Version
+                    List<string> temp = VersionConfig.GetappSettingsSplitBySemicolon("Version", ';');
+                    //校验重复
+                    if (temp.Contains("Version_" + TextBoxVersionNumber.Text.Trim()))
                     {
-                        MessageBox.Show("新增成功！");
+                        MessageBox.Show("已存在相同版本号，请确认！");
+                        TextBoxVersionNumber.SelectAll();
+                        TextBoxVersionNumber.Focus();
+                    }
+                    else
+                    {
+                        bool modifyVersion = VersionConfig.EditappSettingsAddValue("Version", "Version_" + TextBoxVersionNumber.Text.Trim(), ';');
+                        bool addVerison = VersionConfig.AddappSettings("Version_" + TextBoxVersionNumber.Text.Trim(), RichTextBoxVersionDescription.Text.Trim() + ";" + DateTimePickerReleaseDate.Value.ToString("yyyy-MM-dd") + ";");
+                        if (modifyVersion && addVerison)
+                        {
+                            MessageBox.Show("新增成功！");
+                            //恢复控件状态
+                            SetAddEditControlState(0);
+                        }
+                        else
+                        {
+                            MessageBox.Show("新增失败！");
+                        }
+                    }
+                }
+                else if (ACTION == 2)
+                {
+                    bool editVerison = VersionConfig.AddappSettings("Version_" + TextBoxVersionNumber.Text.Trim(), RichTextBoxVersionDescription.Text.Trim() + ";" + DateTimePickerReleaseDate.Value.ToString("yyyy-MM-dd") + ";");
+                    if (editVerison)
+                    {
+                        MessageBox.Show("编辑成功！");
                         //恢复控件状态
                         SetAddEditControlState(0);
                     }
                     else
                     {
-                        MessageBox.Show("新增失败！");
+                        MessageBox.Show("编辑失败！");
                     }
-                }
-            }
-            else if (ACTION == 2)
-            {
-                bool editVerison = VersionConfig.AddappSettings("Version_" + TextBoxVersionNumber.Text.Trim(), RichTextBoxVersionDescription.Text.Trim() + ";" + DateTimePickerReleaseDate.Value.ToString("yyyy-MM-dd") + ";");
-                if (editVerison)
-                {
-                    MessageBox.Show("编辑成功！");
-                    //恢复控件状态
-                    SetAddEditControlState(0);
-                }
-                else
-                {
-                    MessageBox.Show("编辑失败！");
-                }
 
+                }
+                BindDGV();
             }
-            BindDGV();
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)

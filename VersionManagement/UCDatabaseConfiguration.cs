@@ -161,52 +161,59 @@ namespace VersionManagement
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            //0=初始化，1=新增，2=编辑
-            if (ACTION == 1)
+            if (!(CheckHelper.IsStringContainsUnderscoreSemicolon(TextBoxDatabaseCode.Text.Trim()) && CheckHelper.IsStringContainsUnderscoreSemicolon(TextBoxDatabaseName.Text.Trim())))
             {
-                //<add key="Database" value="Database_BaseData;Database_Air;" />
-                //< add key = "Database_BaseData" value = "AMS_BaseData" />
-                //获取所有Database
-                List<string> temp = DefaultConfig.GetappSettingsSplitBySemicolon("Database", ';');
-                //校验重复
-                if (temp.Contains("Database_" + TextBoxDatabaseCode.Text.Trim()))
+                MessageBox.Show(CheckHelper.messageUnderscoreSemicolon);
+            }
+            else
+            {
+                //0=初始化，1=新增，2=编辑
+                if (ACTION == 1)
                 {
-                    MessageBox.Show("已存在相同类型编码，请确认！");
-                    TextBoxDatabaseCode.SelectAll();
-                    TextBoxDatabaseCode.Focus();
-                }
-                else
-                {
-                    bool modifyData = DefaultConfig.EditappSettingsAddValue("Database", "Database_" + TextBoxDatabaseCode.Text.Trim(), ';');
-                    bool addData = DefaultConfig.AddappSettings("Database_" + TextBoxDatabaseCode.Text.Trim(), TextBoxDatabaseName.Text.Trim());
-                    if (modifyData && addData)
+                    //<add key="Database" value="Database_BaseData;Database_Air;" />
+                    //< add key = "Database_BaseData" value = "AMS_BaseData" />
+                    //获取所有Database
+                    List<string> temp = DefaultConfig.GetappSettingsSplitBySemicolon("Database", ';');
+                    //校验重复
+                    if (temp.Contains("Database_" + TextBoxDatabaseCode.Text.Trim()))
                     {
-                        MessageBox.Show("新增成功！");
+                        MessageBox.Show("已存在相同类型编码，请确认！");
+                        TextBoxDatabaseCode.SelectAll();
+                        TextBoxDatabaseCode.Focus();
+                    }
+                    else
+                    {
+                        bool modifyData = DefaultConfig.EditappSettingsAddValue("Database", "Database_" + TextBoxDatabaseCode.Text.Trim(), ';');
+                        bool addData = DefaultConfig.AddappSettings("Database_" + TextBoxDatabaseCode.Text.Trim(), TextBoxDatabaseName.Text.Trim());
+                        if (modifyData && addData)
+                        {
+                            MessageBox.Show("新增成功！");
+                            //恢复控件状态
+                            SetAddEditControlState(0);
+                        }
+                        else
+                        {
+                            MessageBox.Show("新增失败！");
+                        }
+                    }
+                }
+                else if (ACTION == 2)
+                {
+                    bool editData = DefaultConfig.AddappSettings("Database_" + TextBoxDatabaseCode.Text.Trim(), TextBoxDatabaseName.Text.Trim());
+                    if (editData)
+                    {
+                        MessageBox.Show("编辑成功！");
                         //恢复控件状态
                         SetAddEditControlState(0);
                     }
                     else
                     {
-                        MessageBox.Show("新增失败！");
+                        MessageBox.Show("编辑失败！");
                     }
-                }
-            }
-            else if (ACTION == 2)
-            {
-                bool editData = DefaultConfig.AddappSettings("Database_" + TextBoxDatabaseCode.Text.Trim(), TextBoxDatabaseName.Text.Trim());
-                if (editData)
-                {
-                    MessageBox.Show("编辑成功！");
-                    //恢复控件状态
-                    SetAddEditControlState(0);
-                }
-                else
-                {
-                    MessageBox.Show("编辑失败！");
-                }
 
+                }
+                BindDGV();
             }
-            BindDGV();
         }
 
         private void BtnCancel_Click(object sender, EventArgs e)
@@ -220,50 +227,64 @@ namespace VersionManagement
 
         private void LinkLabelTestConn_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
         {
-            string sqlconn;
-
-            if (DGV.SelectedRows.Count != 0)
+            if (!(CheckHelper.IsStringContainsUnderscoreSemicolon(TextBoxSQLUrl.Text.Trim()) && CheckHelper.IsStringContainsUnderscoreSemicolon(TextBoxSQLUsername.Text.Trim()) && CheckHelper.IsStringContainsUnderscoreSemicolon(TextBoxSQLPassword.Text.Trim())))
             {
-                sqlconn = "server=" + TextBoxSQLUrl.Text.Trim() + "; database=" + DGV.SelectedCells[1].Value.ToString() + "; uid=" + TextBoxSQLUsername.Text.Trim() + "; pwd=" + TextBoxSQLPassword.Text.Trim() + "";
+                MessageBox.Show(CheckHelper.messageUnderscoreSemicolon);
             }
             else
             {
-                sqlconn = "server=" + TextBoxSQLUrl.Text.Trim() + "; uid=" + TextBoxSQLUsername.Text.Trim() + "; pwd=" + TextBoxSQLPassword.Text.Trim() + "";
-            }
+                string sqlconn;
 
-            SqlConnection mssqlconn = new SqlConnection(sqlconn);
-            try
-            {
-                mssqlconn.Open();
-                if (mssqlconn.State == ConnectionState.Open)
+                if (DGV.SelectedRows.Count != 0)
                 {
-                    MessageBox.Show("状态：已连接");
+                    sqlconn = "server=" + TextBoxSQLUrl.Text.Trim() + "; database=" + DGV.SelectedCells[1].Value.ToString() + "; uid=" + TextBoxSQLUsername.Text.Trim() + "; pwd=" + TextBoxSQLPassword.Text.Trim() + "";
                 }
                 else
                 {
-                    MessageBox.Show("连不上");
+                    sqlconn = "server=" + TextBoxSQLUrl.Text.Trim() + "; uid=" + TextBoxSQLUsername.Text.Trim() + "; pwd=" + TextBoxSQLPassword.Text.Trim() + "";
                 }
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-            finally
-            {
-                DGV.ClearSelection();
+
+                SqlConnection mssqlconn = new SqlConnection(sqlconn);
+                try
+                {
+                    mssqlconn.Open();
+                    if (mssqlconn.State == ConnectionState.Open)
+                    {
+                        MessageBox.Show("状态：已连接");
+                    }
+                    else
+                    {
+                        MessageBox.Show("连不上");
+                    }
+                }
+                catch (Exception ex)
+                {
+                    MessageBox.Show(ex.Message);
+                }
+                finally
+                {
+                    DGV.ClearSelection();
+                }
             }
         }
 
         private void BtnSQLConnSave_Click(object sender, EventArgs e)
         {
-            bool editDatabaseConn = DefaultConfig.AddappSettings("DatabaseConn", TextBoxSQLUrl.Text.Trim() + ";" + TextBoxSQLUsername.Text.Trim() + ";" + TextBoxSQLPassword.Text.Trim() + ";");
-            if (editDatabaseConn)
+            if (!(CheckHelper.IsStringContainsUnderscoreSemicolon(TextBoxSQLUrl.Text.Trim()) && CheckHelper.IsStringContainsUnderscoreSemicolon(TextBoxSQLUsername.Text.Trim()) && CheckHelper.IsStringContainsUnderscoreSemicolon(TextBoxSQLPassword.Text.Trim())))
             {
-                MessageBox.Show("保存成功！");
+                MessageBox.Show(CheckHelper.messageUnderscoreSemicolon);
             }
             else
             {
-                MessageBox.Show("保存失败！");
+                bool editDatabaseConn = DefaultConfig.AddappSettings("DatabaseConn", TextBoxSQLUrl.Text.Trim() + ";" + TextBoxSQLUsername.Text.Trim() + ";" + TextBoxSQLPassword.Text.Trim() + ";");
+                if (editDatabaseConn)
+                {
+                    MessageBox.Show("保存成功！");
+                }
+                else
+                {
+                    MessageBox.Show("保存失败！");
+                }
             }
         }
 

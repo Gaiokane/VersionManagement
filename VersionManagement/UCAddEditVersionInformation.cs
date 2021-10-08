@@ -240,149 +240,161 @@ namespace VersionManagement
 
         private void BtnSave_Click(object sender, EventArgs e)
         {
-            //0=初始化/新增，1=编辑
-            if (ACTION == 0)
+            if (!(CheckHelper.IsStringContainsUnderscoreSemicolon(TextBoxOrderNum.Text.Trim()) &&
+                CheckHelper.IsStringContainsUnderscoreSemicolon(TextBoxPublishContent.Text.Trim()) &&
+                CheckHelper.IsStringContainsUnderscoreSemicolon(RichTextBoxDescription.Text.Trim()) &&
+                CheckHelper.IsStringContainsUnderscoreSemicolon(RichTextBoxRemark.Text.Trim()) &&
+                CheckHelper.IsStringContainsUnderscoreSemicolon(TextBoxSQLScriptPath.Text.Trim())
+                ))
             {
-                //MessageBox.Show(DETAILMAINGUID);
-
-                //先判断是否有 Detail_版本号_对应系统_Ids（Detail_V100_Base_Ids）
-                //没有则新增，值默认0
-                //有则取出来
-                //将取出的Ids+1后拼上Detail_版本号_对应系统_保存
-                //更新Ids
-
-                //拼接所选版本
-                string detailversion = "Detail_" + ComboBoxVersionNumber.SelectedItem.ToString();
-                //拼接所选版本对应系统的Key
-                string detailmainkey = detailversion + "_" + VersionConfig.GetappSettingsKeyByValue("System", ';', ComboBoxCorrespondingSystem.SelectedItem.ToString()).Split('_')[1];
-                //拼接所选版本对应系统Ids的Key
-                string detailmainguid = detailmainkey + "_Ids";
-                //获取Ids对应Value
-                string ids = VersionConfig.GetappSettings(detailmainguid);
-                //如果Ids为空，说明第一次新增，初始化Value为0
-                if (string.IsNullOrEmpty(ids) && !VersionConfig.AddappSettings(detailmainguid, "0"))
+                MessageBox.Show(CheckHelper.messageUnderscoreSemicolon);
+            }
+            else
+            {
+                //0=初始化/新增，1=编辑
+                if (ACTION == 0)
                 {
-                    //报错则提示
-                    MessageBox.Show("初始化Ids错误");
-                }
-                //在原Ids上+1生成新Ids
-                int newIds = Convert.ToInt32(VersionConfig.GetappSettings(detailmainguid)) + 1;
-                //拼接所选版本对应系统Ids的新Key
-                string newdetailmainguid = detailmainkey + "_" + newIds.ToString();
+                    //MessageBox.Show(DETAILMAINGUID);
 
-                //获取SQL脚本路径中的文件名
-                string[] arrSQLScriptPath = TextBoxSQLScriptPath.Text.Trim().Split('\\');
-                string SQLScriptPath = arrSQLScriptPath[arrSQLScriptPath.Length - 1];
-                //将所选SQL脚本文件复制到程序根目录下的目录SQLScripts中
-                FileHelper.CopyFileTo(TextBoxSQLScriptPath.Text.Trim(), Environment.CurrentDirectory + "\\SQLScripts\\" + SQLScriptPath);
+                    //先判断是否有 Detail_版本号_对应系统_Ids（Detail_V100_Base_Ids）
+                    //没有则新增，值默认0
+                    //有则取出来
+                    //将取出的Ids+1后拼上Detail_版本号_对应系统_保存
+                    //更新Ids
 
-                //value中内容以;隔开
-                string addValue =
-                    //第一项为类型（存编码）
-                    VersionConfig.GetappSettingsKeyByValue("Type", ';', ComboBoxType.SelectedItem.ToString()) + ";" +
-                    //第二项为排序值
-                    TextBoxOrderNum.Text.Trim() + ";" +
-                    //第三项为发布内容
-                    TextBoxPublishContent.Text.Trim() + ";" +
-                    //第四项为详细描述
-                    RichTextBoxDescription.Text.Trim() + ";" +
-                    //第五项为备注
-                    RichTextBoxRemark.Text.Trim() + ";" +
-                    //第六项为对应数据库（存编码）
-                    DefaultConfig.GetappSettingsKeyByValue("Database", ';', ComboBoxCorrespondingDatabase.SelectedItem.ToString()) + ";" +
-                    //第七项为SQL脚本
-                    SQLScriptPath + ";";
-
-                //Details中不存在Detail_版本号，则新增
-                if (!VersionConfig.IsappSettingsValueExistsBySemicolon("Details", ';', detailversion))
-                {
-                    VersionConfig.EditappSettingsAddValue("Details", detailversion, ';');
-                }
-
-                bool addDetailVersion;
-                //不存在Detail_版本号，新增
-                if (!VersionConfig.IsappSettingsExists(detailversion))
-                {
-                    addDetailVersion = VersionConfig.AddappSettings(detailversion, detailmainkey + ";");
-                }
-                //存在，修改Detail_版本号值，存对应系统
-                else
-                {
-                    //如果Value中没有重复项，则新增
-                    if (!VersionConfig.IsappSettingsValueExistsBySemicolon(detailversion, ';', detailmainkey))
+                    //拼接所选版本
+                    string detailversion = "Detail_" + ComboBoxVersionNumber.SelectedItem.ToString();
+                    //拼接所选版本对应系统的Key
+                    string detailmainkey = detailversion + "_" + VersionConfig.GetappSettingsKeyByValue("System", ';', ComboBoxCorrespondingSystem.SelectedItem.ToString()).Split('_')[1];
+                    //拼接所选版本对应系统Ids的Key
+                    string detailmainguid = detailmainkey + "_Ids";
+                    //获取Ids对应Value
+                    string ids = VersionConfig.GetappSettings(detailmainguid);
+                    //如果Ids为空，说明第一次新增，初始化Value为0
+                    if (string.IsNullOrEmpty(ids) && !VersionConfig.AddappSettings(detailmainguid, "0"))
                     {
-                        addDetailVersion = VersionConfig.EditappSettingsAddValue(detailversion, detailmainkey, ';');
+                        //报错则提示
+                        MessageBox.Show("初始化Ids错误");
                     }
-                    //有重复项
+                    //在原Ids上+1生成新Ids
+                    int newIds = Convert.ToInt32(VersionConfig.GetappSettings(detailmainguid)) + 1;
+                    //拼接所选版本对应系统Ids的新Key
+                    string newdetailmainguid = detailmainkey + "_" + newIds.ToString();
+
+                    //获取SQL脚本路径中的文件名
+                    string[] arrSQLScriptPath = TextBoxSQLScriptPath.Text.Trim().Split('\\');
+                    string SQLScriptPath = arrSQLScriptPath[arrSQLScriptPath.Length - 1];
+                    //将所选SQL脚本文件复制到程序根目录下的目录SQLScripts中
+                    FileHelper.CopyFileTo(TextBoxSQLScriptPath.Text.Trim(), Environment.CurrentDirectory + "\\SQLScripts\\" + SQLScriptPath);
+
+                    //value中内容以;隔开
+                    string addValue =
+                        //第一项为类型（存编码）
+                        VersionConfig.GetappSettingsKeyByValue("Type", ';', ComboBoxType.SelectedItem.ToString()) + ";" +
+                        //第二项为排序值
+                        TextBoxOrderNum.Text.Trim() + ";" +
+                        //第三项为发布内容
+                        TextBoxPublishContent.Text.Trim() + ";" +
+                        //第四项为详细描述
+                        RichTextBoxDescription.Text.Trim() + ";" +
+                        //第五项为备注
+                        RichTextBoxRemark.Text.Trim() + ";" +
+                        //第六项为对应数据库（存编码）
+                        DefaultConfig.GetappSettingsKeyByValue("Database", ';', ComboBoxCorrespondingDatabase.SelectedItem.ToString()) + ";" +
+                        //第七项为SQL脚本
+                        SQLScriptPath + ";";
+
+                    //Details中不存在Detail_版本号，则新增
+                    if (!VersionConfig.IsappSettingsValueExistsBySemicolon("Details", ';', detailversion))
+                    {
+                        VersionConfig.EditappSettingsAddValue("Details", detailversion, ';');
+                    }
+
+                    bool addDetailVersion;
+                    //不存在Detail_版本号，新增
+                    if (!VersionConfig.IsappSettingsExists(detailversion))
+                    {
+                        addDetailVersion = VersionConfig.AddappSettings(detailversion, detailmainkey + ";");
+                    }
+                    //存在，修改Detail_版本号值，存对应系统
                     else
                     {
-                        addDetailVersion = true;
+                        //如果Value中没有重复项，则新增
+                        if (!VersionConfig.IsappSettingsValueExistsBySemicolon(detailversion, ';', detailmainkey))
+                        {
+                            addDetailVersion = VersionConfig.EditappSettingsAddValue(detailversion, detailmainkey, ';');
+                        }
+                        //有重复项
+                        else
+                        {
+                            addDetailVersion = true;
+                        }
+                    }
+
+                    bool addDetailVersionSystem;
+                    //不存在Detail_版本_对应系统，新增
+                    if (!VersionConfig.IsappSettingsExists(detailmainkey))
+                    {
+                        addDetailVersionSystem = VersionConfig.AddappSettings(detailmainkey, newdetailmainguid + ";");
+                    }
+                    //存在，修改Detail_版本_对应系统值，存Detail_版本_对应系统_Ids
+                    else
+                    {
+                        addDetailVersionSystem = VersionConfig.EditappSettingsAddValue(detailmainkey, newdetailmainguid, ';');
+                    }
+
+
+                    //新增版本对应系统详情
+                    bool addDetail = VersionConfig.AddappSettings(newdetailmainguid, addValue);
+                    //更新Ids
+                    bool modifyIds = VersionConfig.EditappSettings(detailmainguid, newIds.ToString());
+                    if (addDetailVersion && addDetailVersionSystem && addDetail && modifyIds)
+                    {
+                        MessageBox.Show("新增成功！");
+                        //恢复控件状态
+                        SetAddEditControlState(ACTION);
+                    }
+                    else
+                    {
+                        MessageBox.Show("新增失败！");
                     }
                 }
+                //0=初始化/新增，1=编辑
+                else if (ACTION == 1)
+                {
+                    //MessageBox.Show(DETAILMAINGUID);
 
-                bool addDetailVersionSystem;
-                //不存在Detail_版本_对应系统，新增
-                if (!VersionConfig.IsappSettingsExists(detailmainkey))
-                {
-                    addDetailVersionSystem = VersionConfig.AddappSettings(detailmainkey, newdetailmainguid + ";");
-                }
-                //存在，修改Detail_版本_对应系统值，存Detail_版本_对应系统_Ids
-                else
-                {
-                    addDetailVersionSystem = VersionConfig.EditappSettingsAddValue(detailmainkey, newdetailmainguid, ';');
-                }
+                    //获取SQL脚本路径中的文件名
+                    string[] arrSQLScriptPath = TextBoxSQLScriptPath.Text.Trim().Split('\\');
+                    string SQLScriptPath = arrSQLScriptPath[arrSQLScriptPath.Length - 1];
+                    //将所选SQL脚本文件复制到程序根目录下的目录SQLScripts中
+                    FileHelper.CopyFileTo(TextBoxSQLScriptPath.Text.Trim(), Environment.CurrentDirectory + "\\SQLScripts\\" + SQLScriptPath);
 
-
-                //新增版本对应系统详情
-                bool addDetail = VersionConfig.AddappSettings(newdetailmainguid, addValue);
-                //更新Ids
-                bool modifyIds = VersionConfig.EditappSettings(detailmainguid, newIds.ToString());
-                if (addDetailVersion && addDetailVersionSystem && addDetail && modifyIds)
-                {
-                    MessageBox.Show("新增成功！");
-                    //恢复控件状态
-                    SetAddEditControlState(ACTION);
-                }
-                else
-                {
-                    MessageBox.Show("新增失败！");
-                }
-            }
-            //0=初始化/新增，1=编辑
-            else if (ACTION == 1)
-            {
-                //MessageBox.Show(DETAILMAINGUID);
-
-                //获取SQL脚本路径中的文件名
-                string[] arrSQLScriptPath = TextBoxSQLScriptPath.Text.Trim().Split('\\');
-                string SQLScriptPath = arrSQLScriptPath[arrSQLScriptPath.Length - 1];
-                //将所选SQL脚本文件复制到程序根目录下的目录SQLScripts中
-                FileHelper.CopyFileTo(TextBoxSQLScriptPath.Text.Trim(), Environment.CurrentDirectory + "\\SQLScripts\\" + SQLScriptPath);
-
-                //value中内容以;隔开
-                string editValue =
-                    //第一项为类型（存编码）
-                    VersionConfig.GetappSettingsKeyByValue("Type", ';', ComboBoxType.SelectedItem.ToString()) + ";" +
-                    //第二项为排序值
-                    TextBoxOrderNum.Text.Trim() + ";" +
-                    //第三项为发布内容
-                    TextBoxPublishContent.Text.Trim() + ";" +
-                    //第四项为详细描述
-                    RichTextBoxDescription.Text.Trim() + ";" +
-                    //第五项为备注
-                    RichTextBoxRemark.Text.Trim() + ";" +
-                    //第六项为对应数据库（存编码）
-                    DefaultConfig.GetappSettingsKeyByValue("Database", ';', ComboBoxCorrespondingDatabase.SelectedItem.ToString()) + ";" +
-                    //第七项为SQL脚本
-                    SQLScriptPath + ";";
-                bool editDetail = VersionConfig.AddappSettings(DETAILMAINGUID, editValue);
-                if (editDetail)
-                {
-                    MessageBox.Show("编辑成功！");
-                }
-                else
-                {
-                    MessageBox.Show("编辑失败！");
+                    //value中内容以;隔开
+                    string editValue =
+                        //第一项为类型（存编码）
+                        VersionConfig.GetappSettingsKeyByValue("Type", ';', ComboBoxType.SelectedItem.ToString()) + ";" +
+                        //第二项为排序值
+                        TextBoxOrderNum.Text.Trim() + ";" +
+                        //第三项为发布内容
+                        TextBoxPublishContent.Text.Trim() + ";" +
+                        //第四项为详细描述
+                        RichTextBoxDescription.Text.Trim() + ";" +
+                        //第五项为备注
+                        RichTextBoxRemark.Text.Trim() + ";" +
+                        //第六项为对应数据库（存编码）
+                        DefaultConfig.GetappSettingsKeyByValue("Database", ';', ComboBoxCorrespondingDatabase.SelectedItem.ToString()) + ";" +
+                        //第七项为SQL脚本
+                        SQLScriptPath + ";";
+                    bool editDetail = VersionConfig.AddappSettings(DETAILMAINGUID, editValue);
+                    if (editDetail)
+                    {
+                        MessageBox.Show("编辑成功！");
+                    }
+                    else
+                    {
+                        MessageBox.Show("编辑失败！");
+                    }
                 }
             }
         }
