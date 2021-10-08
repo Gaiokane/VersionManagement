@@ -9,7 +9,7 @@ namespace VersionManagement.Helper
     class CheckHelper
     {
         //字符串中是否包含 _(Underscore) ;(Semicolon)
-        static string[] strUnderscoreSemicolon = new string[] { "_", ";" };
+        static readonly string[] strUnderscoreSemicolon = new string[] { "_", ";" };
         //字符串中包含 _(Underscore) ;(Semicolon)的提示信息
         public static string messageUnderscoreSemicolon = "所填项中不能含有 _ ;";
 
