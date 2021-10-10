@@ -123,7 +123,7 @@ namespace VersionManagement.Helper
             }
             if (string.IsNullOrEmpty(Detail_V5_0_0_Base_Ids))
             {
-                ConfigHelper.AddappSettings("Detail_V5.0.0_Base_Ids", @"1", CONFIGPATH);
+                ConfigHelper.AddappSettings("Detail_V5.0.0_Base_Ids", @"2", CONFIGPATH);
             }
             if (string.IsNullOrEmpty(Detail_V5_0_0_Base))
             {
