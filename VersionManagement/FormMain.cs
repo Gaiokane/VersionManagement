@@ -24,6 +24,13 @@ namespace VersionManagement
             //加载默认图标
             this.Icon = Properties.Resources.ahx5z_4c0qe_002;
 
+            //校验程序所在路径中是否含有空格
+            if (CheckHelper.IsPathContainSpaces())
+            {
+                MessageBox.Show(CheckHelper.messagePathContainSpaces);
+                Application.Exit();
+            }
+
             //默认配置文件初始化
             DefaultConfig.Init();
             //默认配置文件读取配置

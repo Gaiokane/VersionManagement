@@ -8,6 +8,24 @@ namespace VersionManagement.Helper
 {
     class CheckHelper
     {
+        #region 校验程序所在路径中是否含有空格
+        public static string rootPath = Environment.CurrentDirectory;
+        //程序所在路径中中包含空格的提示信息
+        public static string messagePathContainSpaces = "程序所在路径中不能含有空格，请确认！" + "\r\n" + rootPath;
+        public static bool IsPathContainSpaces()
+        {
+            if (rootPath.IndexOf(" ") >= 0)
+            {
+                return true;
+            }
+            else
+            {
+                return false;
+            }
+        }
+        #endregion
+
+        #region 校验字符串中是否含有异常字符（_;）
         //字符串中是否包含 _(Underscore) ;(Semicolon)
         static readonly string[] strUnderscoreSemicolon = new string[] { "_", ";" };
         //字符串中包含 _(Underscore) ;(Semicolon)的提示信息
@@ -30,5 +48,6 @@ namespace VersionManagement.Helper
             }
             return true;
         }
+        #endregion
     }
 }
